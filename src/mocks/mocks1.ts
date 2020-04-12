@@ -43,6 +43,10 @@ export default {
     {
       from: 3,
       to: 4
+    },
+    {
+      from: 2,
+      to: 3
     }
   ],
   paths: [
