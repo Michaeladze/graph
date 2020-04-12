@@ -1,0 +1,30 @@
+.scene {
+    position: relative;
+}
+
+.node {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
+.node--process {
+    background-color: lightpink;
+}
+
+.scene svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
