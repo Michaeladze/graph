@@ -22,11 +22,11 @@ export const ordering = (data: IGraphData, graph: IGraph, elementsOnRank: IMatri
 /** Находим узлы на одном уровне и если они являются parent->child структурой, растаскиваем их на разные уровни
  * @param graph - граф
  * @param elementsOnRank - массив количества узлов на уровне */
-function findParentChild(graph: IGraph, elementsOnRank: number[]) {
+function findParentChild(graph: IGraph, elementsOnRank: IMatrix) {
 
   /** [1] Находим уровни, где больше 1 узла */
   const entries: INumberMap<IEntry[]> = Object.entries(graph)
-    .filter((e: IEntry) => elementsOnRank[e[1].y] > 1)
+    .filter((e: IEntry) => elementsOnRank[e[1].y].length > 1)
     .reduce((acc: INumberMap<IEntry[]>, e: IEntry) => {
       if (acc[e[1].y] === undefined) {
         acc[e[1].y] = [];

@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Graph from './Graph/Graph';
-import data from './mocks/mocks';
+import data from './mocks/mocks1';
 
 function App() {
   return (

@@ -23,7 +23,9 @@ const Graph: React.FC<IProps> = ({ data }) => {
       key={n.name}
       id={n.name.replace(/\s/g, '-').toLowerCase()}
       className={`node ${n.process ? 'node--process' : ''} ${n.fake ? 'node--fake' : ''}`}
-      style={{ transform: `translate(${n.x * 80}px, ${n.y * 80}px)` }}>{n.name}</div>
+      style={{ transform: `translate(${n.x * 80}px, ${n.y * 80}px)` }}>
+      {n.fake ? 'F' : n.name}
+    </div>
   )
 
   return (

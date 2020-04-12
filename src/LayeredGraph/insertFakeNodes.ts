@@ -1,19 +1,39 @@
-import { IEdge, IGraph, IGraphData, IMatrix } from './interfaces/interfaces';
+import { IEdge, IGraph, IMatrix } from './interfaces/interfaces';
+
+/** [Описание]
+ * [1] Определяем, если между узлами ребро тянется через >1 уровней
+ * [2] Если да, то спускаемся на уровень вниз/поднимаемся вверх и обходим пока что от 0 до бесконечности,
+ * пока не найдем свободную ячейку
+ * [3] Когда находим свободную ячейку, вставляем в нее новый узел. Повторяем [1].
+ * [4] Удаляем ребро, которое заменили на связь (from)-->(узел)-->(to)
+ * */
 
 /** Вставляем фейковые узлы
- * @param data - данные
+ * @param edges - ребра
  * @param graph - граф
- * matrix - матрица с ячейками */
-export const insertFakeNodes = (data: IGraphData, graph: IGraph, matrix: IMatrix) => {
+ * @param matrix - матрица с ячейками */
+export const insertFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix): IEdge[] => {
+  /** Индексы ребер, которые нужно удалить */
+  let indexesToRemove: Set<number> = new Set();
 
   /** Обходим все ребра и проверяем...*/
-  data.edges.forEach((edge: IEdge, i: number) => {
+  edges.forEach((edge: IEdge, i: number) => {
     let delta: number = graph[edge.from].y - graph[edge.to].y;
     if (Math.abs(delta) > 1) {
-      /** Если ребро пересекает >1 уровня, вставляем фейковый узел */
-      insertFakeNode(edge.from, edge.to, graph, data, i, matrix, delta);
+      console.log(edge.from, edge.to)
+      /** Если ребро не соединяет соседние узлы процесса и ребро пересекает >1 уровня, вставляем фейковый узел */
+      indexesToRemove = insertFakeNode(edge.from, edge.to, graph, edges, i, matrix, delta, indexesToRemove);
     }
   });
+
+  /** Конвертируем сет в массив и сортируем, чтобы при обходе не стереть нужное ребро */
+  const indexes: number[] = Array.from(indexesToRemove).sort((n: number, m: number) => n - m);
+  /** Удаляем ребра */
+  for (let i: number = indexes.length - 1; i >= 0; i--) {
+    edges.splice(indexes[i], 1);
+  }
+
+  return edges;
 }
 
 
@@ -21,11 +41,17 @@ export const insertFakeNodes = (data: IGraphData, graph: IGraph, matrix: IMatrix
  * @param from - откуда идем
  * @param to - куда идем
  * @param graph - граф
- * @param data - данные
+ * @param edges - ребра
  * @param i - индекс последнего ребра, которое нужно удалить
  * @param matrix - матрица
- * @param delta - разница */
-function insertFakeNode(from: number, to: number, graph: IGraph, data: IGraphData, i: number, matrix: IMatrix, delta: number) {
+ * @param delta - разница
+ * @param indexesToRemove - индексы ребер, которые нужно удалить по окончании циклов */
+function insertFakeNode(from: number, to: number, graph: IGraph, edges: IEdge[], i: number, matrix: IMatrix,
+                        delta: number, indexesToRemove: Set<number>): Set<number> {
+
+  /** Добавляем индексы для удаления */
+  indexesToRemove.add(i);
+
   /** Генерируем имя фейкового узла */
   const name: number = hashNodeName(from, to);
   /** Индекс последнего вставленного ребра в edges */
@@ -40,7 +66,7 @@ function insertFakeNode(from: number, to: number, graph: IGraph, data: IGraphDat
     /** Занимаем ячейку */
     if (matrix[newRank][col] === undefined) {
       matrix[newRank][col] = name;
-      insertedNodeIndex = insertNode(graph, data, name, newRank, col, i, from, to);
+      insertedNodeIndex = insertNode(graph, edges, name, newRank, col, from, to);
       break;
     }
 
@@ -53,8 +79,12 @@ function insertFakeNode(from: number, to: number, graph: IGraph, data: IGraphDat
   /** [3] Если разница уровней все еще больше 1, то рекурсивно вызываем insertFakeNode */
   delta = newRank - graph[to].y;
   if (Math.abs(delta) > 1) {
-    insertFakeNode(name, to, graph, data, insertedNodeIndex, matrix, delta);
+    /** Добавляем индексы для удаления */
+    indexesToRemove.add(insertedNodeIndex);
+    return insertFakeNode(name, to, graph, edges, insertedNodeIndex, matrix, delta, indexesToRemove);
   }
+
+  return indexesToRemove;
 }
 
 /** Функция хеширования названия фейкового узла
@@ -66,20 +96,18 @@ function hashNodeName(from: number, to: number): number {
 
 /** Добавляем узел
  * @param graph - граф
- * @param data - данные
+ * @param edges - ребра
  * @param name - имя фейкового узла
  * @param row - ряд
  * @param col - колонка
- * @param i - индекс ребра, которое нужно удалить
  * @param from - откуда идем
  * @param to - куда идем
  */
 function insertNode(graph: IGraph,
-                    data: IGraphData,
+                    edges: IEdge[],
                     name: number,
                     row: number,
                     col: number,
-                    i: number,
                     from: number,
                     to: number): number {
 
@@ -95,15 +123,14 @@ function insertNode(graph: IGraph,
   };
 
   /** Заменяем в массиве ребер текущее ребро двумя новыми */
-  data.edges.push({
+  edges.push({
     from: from,
     to: name
   });
-  data.edges.push({
+  edges.push({
     from: name,
     to: to
   });
-  data.edges.splice(i, 1);
 
-  return data.edges.length - 1;
+  return edges.length - 1;
 }

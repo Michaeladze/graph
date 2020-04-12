@@ -26,6 +26,7 @@
 
 .node--fake {
     background-color: lightpink;
+    opacity: 0.75;
 }
 
 .scene svg {

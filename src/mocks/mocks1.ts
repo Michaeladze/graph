@@ -57,12 +57,16 @@ export default {
       to: 6
     },
     {
-      from: 4,
+      from: 0,
       to: 6
     },
     {
+      from: 6,
+      to: 1
+    },
+    {
       from: 0,
-      to: 6
+      to: 4
     }
   ],
   paths: [
