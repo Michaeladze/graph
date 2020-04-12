@@ -34,24 +34,40 @@ export default {
     },
     {
       from: 2,
-      to: 1
-    },
-    {
-      from: 3,
-      to: 1
+      to: 3
     },
     {
       from: 3,
       to: 4
     },
     {
+      from: 4,
+      to: 1
+    },
+    {
       from: 2,
-      to: 3
+      to: 5
+    },
+    {
+      from: 5,
+      to: 6
+    },
+    {
+      from: 2,
+      to: 6
+    },
+    {
+      from: 4,
+      to: 6
+    },
+    {
+      from: 0,
+      to: 6
     }
   ],
   paths: [
     {
-      path: [2],
+      path: [2, 3, 4],
       count: 88
     }
   ]

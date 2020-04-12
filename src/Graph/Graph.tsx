@@ -22,7 +22,7 @@ const Graph: React.FC<IProps> = ({ data }) => {
     <div
       key={n.name}
       id={n.name.replace(/\s/g, '-').toLowerCase()}
-      className={`node ${n.process ? 'node--process' : ''}`}
+      className={`node ${n.process ? 'node--process' : ''} ${n.fake ? 'node--fake' : ''}`}
       style={{ transform: `translate(${n.x * 80}px, ${n.y * 80}px)` }}>{n.name}</div>
   )
 

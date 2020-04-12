@@ -56,10 +56,16 @@ export interface IGraphNode {
   process: 1 | 0;
   /** Узлы, связанные с процессом */
   processSibling: number;
+  /** Фейковый узел */
+  fake: number;
 }
 
 export interface INumberMap<V> {
   [key: number]: V;
 }
 
+/** Object.entries(graph) */
 export type IEntry = [string, IGraphNode];
+
+/** Матрица */
+export type IMatrix = (number | undefined)[][];

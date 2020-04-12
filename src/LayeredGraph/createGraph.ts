@@ -17,7 +17,8 @@ export const createGraph = (data: IGraphData): IGraph => {
         y: 0,
         parents: [],
         process: 0,
-        processSibling: 0
+        processSibling: 0,
+        fake: 0
       };
     }
 
@@ -28,7 +29,8 @@ export const createGraph = (data: IGraphData): IGraph => {
         y: 0,
         parents: [],
         process: 0,
-        processSibling: 0
+        processSibling: 0,
+        fake: 0
       };
     }
 

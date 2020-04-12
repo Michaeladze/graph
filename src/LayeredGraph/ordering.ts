@@ -1,21 +1,22 @@
-import { IEntry, IGraph, IGraphData, INumberMap } from './interfaces/interfaces';
+import { IEntry, IGraph, IGraphData, IMatrix, INumberMap } from './interfaces/interfaces';
 
-export const ordering = (data: IGraphData, graph: IGraph, elementsOnRank: number[][]) => {
+export const ordering = (data: IGraphData, graph: IGraph, elementsOnRank: IMatrix): IMatrix => {
 
   /** Копируем массив */
-  const elementsOnRankTmp: number[][] = [...elementsOnRank];
-  console.log(elementsOnRank)
+  const matrix: IMatrix = [...elementsOnRank];
 
   /** Выводим все узлы уровня в один ряд */
   for (const key in graph) {
     if (!graph[key].process) {
       const rank: number = graph[key].y;
-      graph[key].x = elementsOnRankTmp[rank].indexOf(+key);
+      graph[key].x = matrix[rank].indexOf(+key);
     }
   }
 
   /** Ищем parent-child структуры и сдвигаем граф */
   // findParentChild(graph, elementsOnRank);
+
+  return matrix;
 }
 
 /** Находим узлы на одном уровне и если они являются parent->child структурой, растаскиваем их на разные уровни

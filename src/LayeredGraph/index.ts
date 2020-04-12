@@ -1,4 +1,4 @@
-import { IGraph, IGraphData } from './interfaces/interfaces';
+import { IGraph, IGraphData, IMatrix } from './interfaces/interfaces';
 import { createGraph } from './createGraph';
 import { ranking } from './ranking';
 import { ordering } from './ordering';
@@ -19,13 +19,13 @@ export class LayeredGraph {
     this.graph = createGraph(this.data);
 
     /** Распределяем узлы по уровням */
-    const elementsOnRank: number[][] = ranking(this.data, this.graph);
-
-    /** Вставляем фейковые узлы */
-    insertFakeNodes();
+    const elementsOnRank: IMatrix = ranking(this.data, this.graph);
 
     /** Распределяем узлы по горизонтали */
-    ordering(this.data, this.graph, elementsOnRank);
+    const matrix: IMatrix = ordering(this.data, this.graph, elementsOnRank);
+
+    /** Вставляем фейковые узлы */
+    insertFakeNodes(this.data, this.graph, matrix);
 
     /** Создаем массив узлов с координатами */
     const nodes: any = Object.keys(this.graph).map((n: string) => {
@@ -33,7 +33,8 @@ export class LayeredGraph {
         name: n,
         x: this.graph[+n].x,
         y: this.graph[+n].y,
-        process: this.graph[+n].process
+        process: this.graph[+n].process,
+        fake: this.graph[+n].fake
       }
     });
 

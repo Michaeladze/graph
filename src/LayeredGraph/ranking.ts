@@ -1,4 +1,4 @@
-import { IEntry, IGraph, IGraphData, INumberMap } from './interfaces/interfaces';
+import { IEntry, IGraph, IGraphData, IMatrix, INumberMap } from './interfaces/interfaces';
 
 /** [Описание]
  * [1] Выбираем среди путей путь с наибольшей частотой (весом). Этот путь называется Процесс.
@@ -14,8 +14,8 @@ import { IEntry, IGraph, IGraphData, INumberMap } from './interfaces/interfaces'
 /** Распределение узлов по уровням
  * @param data - данные графа
  * @param graph - граф */
-export const ranking = ({ paths }: IGraphData, graph: IGraph): number[][] => {
-  let elementsOnRank: number[][] = [];
+export const ranking = ({ paths }: IGraphData, graph: IGraph): IMatrix => {
+  let elementsOnRank: IMatrix = [];
 
   if (paths && paths.length > 0) {
     const process: number[] = paths[0].path;
@@ -107,9 +107,9 @@ function arrangeRanks(process: IGraph, graph: IGraph) {
 
 /** Нормализация уровней
  * @param graph - граф */
-function normalize(graph: IGraph): number[][] {
+function normalize(graph: IGraph): IMatrix {
   /** Количество элементов на уровне */
-  const elementsOnRank: number[][] = [];
+  const elementsOnRank: IMatrix = [];
 
   /** Собираем массив entries графа, отсортированный по уровню и принадлежности процессу */
   const entries: IEntry[] = Object.entries(graph).sort((a: IEntry, b: IEntry) =>
