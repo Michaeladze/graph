@@ -4,6 +4,7 @@ import { ranking } from './ranking';
 import { ordering } from './ordering';
 import { drawEdges } from './drawEdges';
 import { insertFakeNodes } from './insertFakeNodes';
+import { balancing } from './balancing';
 
 export class LayeredGraph {
   /** Граф */
@@ -14,8 +15,6 @@ export class LayeredGraph {
 
   /** Инициализируем граф */
   public init(): any {
-    console.log(this.data);
-
     /** [1] Создаем структуру графа */
     this.graph = createGraph(this.data);
 
@@ -30,7 +29,10 @@ export class LayeredGraph {
     /** [4] Вставляем фейковые узлы */
     edges = insertFakeNodes(edges, this.graph, matrix);
 
-    /** [5] Рисуем ребра */
+    /** [5] Балансировка */
+    balancing(this.graph, matrix);
+
+    /** [6] Рисуем ребра */
     setTimeout(() => {
       drawEdges(edges, this.graph);
     }, 500);
