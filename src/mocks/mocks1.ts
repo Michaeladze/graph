@@ -50,7 +50,35 @@ export default {
     },
     {
       from: 5,
+      to: 3
+    },
+    {
+      from: 0,
+      to: 5
+    },
+    {
+      from: 5,
       to: 6
+    },
+    {
+      from: 6,
+      to: 7
+    },
+    {
+      from: 4,
+      to: 6
+    },
+    {
+      from: 7,
+      to: 1
+    },
+    {
+      from: 6,
+      to: 1
+    },
+    {
+      from: 6,
+      to: 3
     },
     {
       from: 2,
@@ -59,10 +87,6 @@ export default {
     {
       from: 0,
       to: 6
-    },
-    {
-      from: 6,
-      to: 1
     },
     {
       from: 0,

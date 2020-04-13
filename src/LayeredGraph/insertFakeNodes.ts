@@ -20,7 +20,6 @@ export const insertFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix):
   edges.forEach((edge: IEdge, i: number) => {
     let delta: number = graph[edge.from].y - graph[edge.to].y;
     if (Math.abs(delta) > 1) {
-      console.log(edge.from, edge.to)
       /** Если ребро не соединяет соседние узлы процесса и ребро пересекает >1 уровня, вставляем фейковый узел */
       indexesToRemove = insertFakeNode(edge.from, edge.to, graph, edges, i, matrix, delta, indexesToRemove);
     }

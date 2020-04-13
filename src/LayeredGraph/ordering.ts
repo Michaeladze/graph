@@ -1,6 +1,16 @@
-import { IEntry, IGraph, IGraphData, IMatrix, INumberMap } from './interfaces/interfaces';
+import { IEntry, IGraph, IMatrix } from './interfaces/interfaces';
+import { rearrangeMatrix } from './rearrangeMatrix';
 
-export const ordering = (data: IGraphData, graph: IGraph, elementsOnRank: IMatrix): IMatrix => {
+/** [Описание]
+ * [1] В порядке добавления на уровень выводим узлы в ряд
+ * [2] В каждом ряду ищем (parent)-->(child) структуру
+ * [3] Если находим, сдвигаем (child) на уровень вниз
+ * [4] Перераспределяем узлы в матрице */
+
+/** Функция распределения узлов по горизонтали
+ * @param graph - граф
+ * @param elementsOnRank - матрица элементов */
+export const ordering = (graph: IGraph, elementsOnRank: IMatrix): IMatrix => {
 
   /** Копируем массив */
   const matrix: IMatrix = [...elementsOnRank];
@@ -14,41 +24,33 @@ export const ordering = (data: IGraphData, graph: IGraph, elementsOnRank: IMatri
   }
 
   /** Ищем parent-child структуры и сдвигаем граф */
-  // findParentChild(graph, elementsOnRank);
-
-  return matrix;
+  return findParentChild(graph, matrix);
 }
 
 /** Находим узлы на одном уровне и если они являются parent->child структурой, растаскиваем их на разные уровни
  * @param graph - граф
  * @param elementsOnRank - массив количества узлов на уровне */
-function findParentChild(graph: IGraph, elementsOnRank: IMatrix) {
+function findParentChild(graph: IGraph, elementsOnRank: IMatrix): IMatrix {
 
-  /** [1] Находим уровни, где больше 1 узла */
-  const entries: INumberMap<IEntry[]> = Object.entries(graph)
-    .filter((e: IEntry) => elementsOnRank[e[1].y].length > 1)
-    .reduce((acc: INumberMap<IEntry[]>, e: IEntry) => {
-      if (acc[e[1].y] === undefined) {
-        acc[e[1].y] = [];
-      }
-      acc[e[1].y].push(e);
-      return acc;
-    }, {});
+  /** Не эффективно */
+  for (let rank: number = 0; rank < elementsOnRank.length; rank++) {
+    const rankNodes: number[] = elementsOnRank[rank] as number[];
 
-
-  /** [2] В каждом ряду ищем пары parent->child. Не супер эффективно, к сожалению */
-  for (const rank in entries) {
-    const nodes: number[] = entries[rank].map((e: IEntry) => +e[0]);
-    entries[rank].forEach((e: IEntry) => {
-      for (let i = 0; i < e[1].children.length; i++) {
-        const index: number = nodes.indexOf(e[1].children[i]);
-        /** Если находим, меняем child координаты и родительне является ущлов процесса */
+    rankNodes.forEach((node: number | undefined) => {
+      graph[node as number].children.forEach((child: number) => {
+        const index: number = rankNodes.indexOf(child);
+        /** Если находим... */
         if (index >= 0) {
-          shiftRanks(+rank, +e[0], nodes[index], graph);
+          /** Меняем child координаты и родительне является ущлов процесса */
+          shiftRanks(rank, (node as number), (rankNodes[index] as number), graph);
+          /** И перераспределяем узлы в матрице */
+          elementsOnRank = rearrangeMatrix(graph);
         }
-      }
+      })
     })
   }
+
+  return elementsOnRank;
 }
 
 /** Сдвигаем уровни
@@ -57,10 +59,11 @@ function findParentChild(graph: IGraph, elementsOnRank: IMatrix) {
  * @param child - дочерний узел
  * @param graph - граф */
 function shiftRanks(rank: number, parent: number, child: number, graph: IGraph) {
+  console.log(`${parent}-->${child}`);
   /** Сортируем граф по уровням */
   const entries: IEntry[] = Object.entries(graph).sort((a: IEntry, b: IEntry) => a[1].y - b[1].y);
 
-  /** Если передвигаемый (дочерний) узел связан с узлом процесса на новом уровне, двигаем процесс */
+  /** Родственные элементы дочернего узла */
   const relatives: number[] = [...graph[child].children, ...graph[child].parents];
   /** Узел процессса на уровне rank */
   const processNode: IEntry = entries.find((e: IEntry) =>
@@ -70,7 +73,7 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph) 
     /** Новый уровень */
     let startShiftingRank: number = rank
 
-    /** Задваем сдвиг на 1 уровень вниз */
+    /** Задаем сдвиг на 1 уровень вниз */
     if (relatives.indexOf(+processNode[0]) >= 0) {
       startShiftingRank = rank + 1;
     }
@@ -89,7 +92,7 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph) 
   }
 
   /** Ставим дочерний узел под родительский. Если он является частью процесса, то меняем только Y */
-  if (!graph[child].process  && !graph[parent].process) {
+  if (!graph[child].process && !graph[parent].process) {
     graph[child].x = graph[parent].x;
   }
   graph[child].y = graph[parent].y + 1;

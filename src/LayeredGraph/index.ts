@@ -14,20 +14,26 @@ export class LayeredGraph {
 
   /** Инициализируем граф */
   public init(): any {
-    console.log(this.data)
-    /** создаем структуру графа */
+    console.log(this.data);
+
+    /** [1] Создаем структуру графа */
     this.graph = createGraph(this.data);
 
     let edges: IEdge[] = [...this.data.edges];
 
-    /** Распределяем узлы по уровням */
+    /** [2] Распределяем узлы по вертикали */
     const elementsOnRank: IMatrix = ranking(this.data, this.graph);
 
-    /** Распределяем узлы по горизонтали */
-    const matrix: IMatrix = ordering(this.data, this.graph, elementsOnRank);
+    /** [3] Распределяем узлы по горизонтали */
+    const matrix: IMatrix = ordering(this.graph, elementsOnRank);
 
-    /** Вставляем фейковые узлы */
+    /** [4] Вставляем фейковые узлы */
     edges = insertFakeNodes(edges, this.graph, matrix);
+
+    /** [5] Рисуем ребра */
+    setTimeout(() => {
+      drawEdges(edges, this.graph);
+    }, 500);
 
     /** Создаем массив узлов с координатами */
     const nodes: any = Object.keys(this.graph).map((n: string) => {
@@ -39,10 +45,6 @@ export class LayeredGraph {
         fake: this.graph[+n].fake
       }
     });
-
-    setTimeout(() => {
-      drawEdges(edges, this.graph);
-    }, 500);
 
     console.log(this.graph);
     return nodes;
