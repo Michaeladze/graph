@@ -57,16 +57,8 @@ export default {
       to: 5
     },
     {
-      from: 5,
-      to: 6
-    },
-    {
       from: 6,
       to: 7
-    },
-    {
-      from: 4,
-      to: 6
     },
     {
       from: 7,

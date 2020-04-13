@@ -66,7 +66,7 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph) 
   /** Родственные элементы дочернего узла */
   const relatives: number[] = [...graph[child].children, ...graph[child].parents];
   /** Узел процессса на уровне rank */
-  const processNode: IEntry = entries.find((e: IEntry) =>
+  const processNode: IEntry = entries.find(([e]: IEntry) =>
     graph[+e[0]].y === rank + 1 && graph[+e[0]].process) as IEntry;
 
   if (processNode) {
