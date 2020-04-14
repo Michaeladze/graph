@@ -5,6 +5,7 @@ import { ordering } from './ordering';
 import { drawEdges } from './drawEdges';
 import { insertFakeNodes } from './insertFakeNodes';
 import { balancing } from './balancing';
+import { crossingMinimization } from './crossingMinimization';
 
 export class LayeredGraph {
   /** Граф */
@@ -26,16 +27,19 @@ export class LayeredGraph {
     const elementsOnRank: IMatrix = ranking(this.data, this.graph);
 
     /** [3] Распределяем узлы по горизонтали */
-    const matrix: IMatrix = ordering(this.graph, elementsOnRank);
+    let matrix: IMatrix = ordering(this.graph, elementsOnRank);
 
     /** [4] Вставляем фейковые узлы */
     const fakes: IFakeResult = insertFakeNodes(edges, this.graph, matrix);
     edges = fakes.edges;
 
     /** [5] Балансировка */
-    balancing(this.data.paths[0].path, this.graph, matrix, fakes.pathMap);
+    matrix = balancing(this.data.paths[0].path, this.graph, matrix, fakes.pathMap);
 
-    /** [6] Рисуем ребра */
+    /** [6] Уменьшаем количество пересечений */
+    crossingMinimization(this.graph, matrix);
+
+    /** [7] Рисуем ребра */
     setTimeout(() => {
       drawEdges(edges, this.graph);
     }, 500);

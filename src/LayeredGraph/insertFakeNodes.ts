@@ -137,6 +137,18 @@ function insertNode(graph: IGraph,
     fake: 1
   };
 
+  /** Добавляем name в дочерние узлы родителю и убираем непосредственную связь from - to */
+  graph[from] = {
+    ...graph[from],
+    children: [...graph[from].children.filter((n: number) => n !== to), name]
+  }
+
+  /** Добавляем name в родительские узлы последователю и убираем непосредственную связь from - to */
+  graph[to] = {
+    ...graph[to],
+    parents: [...graph[to].parents.filter((n: number) => n !== from), name]
+  }
+
   /** Заменяем в массиве ребер текущее ребро двумя новыми */
   edges.push({
     from: from,

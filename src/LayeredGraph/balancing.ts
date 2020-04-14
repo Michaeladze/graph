@@ -18,7 +18,7 @@ type IEntry = [string, Set<number>];
  * @param matrix - матрица
  * @param pathMap - таблица путей
  * @param process - узлы процесса */
-export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pathMap: IPathMap) => {
+export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pathMap: IPathMap): IMatrix => {
   /** Определить медиану */
   let ptm: IMedianResult = processToMedian(graph, matrix);
 
@@ -61,6 +61,8 @@ export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pat
   }
 
   recursiveBalancing(graph, matrix, pathMap);
+
+  return ptm.matrix;
 }
 
 /** Определить ширину графа и выставить процесс в x = медиана
@@ -138,13 +140,13 @@ function shiftToLeft(graph: IGraph, pathToMove: IEntry, ptm: IMedianResult,
     for (let x: number = ptm.median; x >= 0; x--) {
       if (ptm.matrix[graph[node].y][x] === undefined) {
 
-        /** Сдвигаем все узлы справа того же уровня на один влево, чтобы заполнить пустоты  */
-        for (let rx: number = graph[node].x + 1; rx < ptm.matrix[graph[node].y].length; rx++) {
-          const n: number | undefined = ptm.matrix[graph[node].y][rx];
-          if (n && graph[n].x !== ptm.median && graph[n].x - 1 !== ptm.median) {
-            graph[n].x = graph[n].x - 1;
-          }
-        }
+        // /** Сдвигаем все узлы справа того же уровня на один влево, чтобы заполнить пустоты  */
+        // for (let rx: number = graph[node].x + 1; rx < ptm.matrix[graph[node].y].length; rx++) {
+        //   const n: number | undefined = ptm.matrix[graph[node].y][rx];
+        //   if (n && graph[n].x !== ptm.median && ptm.matrix[graph[node].y][graph[n].x - 1] === undefined) {
+        //     graph[n].x = graph[n].x - 1;
+        //   }
+        // }
 
         /** Устанавливаем узлу графа новую координату */
         graph[node].x = x;
