@@ -1,4 +1,4 @@
-import { IEdge, IFakeResult, IGraph, IGraphData, IMatrix } from './interfaces/interfaces';
+import { IBalanceResult, IEdge, IFakeResult, IGraph, IGraphData, IMatrix, IPathMap } from './interfaces/interfaces';
 import { createGraph } from './createGraph';
 import { ranking } from './ranking';
 import { ordering } from './ordering';
@@ -33,11 +33,14 @@ export class LayeredGraph {
     const fakes: IFakeResult = insertFakeNodes(edges, this.graph, matrix);
     edges = fakes.edges;
 
+    /** Копируем таблицу путей */
+    const pathMap: IPathMap = {...fakes.pathMap};
+
     /** [5] Балансировка */
-    matrix = balancing(this.data.paths[0].path, this.graph, matrix, fakes.pathMap);
+    const balance: IBalanceResult = balancing(this.data.paths[0].path, this.graph, matrix, fakes.pathMap);
 
     /** [6] Уменьшаем количество пересечений */
-    crossingMinimization(this.graph, matrix);
+    crossingMinimization(this.graph, balance, pathMap);
 
     /** [7] Рисуем ребра */
     setTimeout(() => {

@@ -1,5 +1,5 @@
 /** Балансировка графа */
-import { IGraph, IMap, IMatrix, IPathMap } from './interfaces/interfaces';
+import { IBalanceResult, IGraph, IMap, IMatrix, IPathMap } from './interfaces/interfaces';
 import { rearrangeMatrix } from './rearrangeMatrix';
 import { initProcess } from './initProcess';
 
@@ -18,7 +18,7 @@ type IEntry = [string, Set<number>];
  * @param matrix - матрица
  * @param pathMap - таблица путей
  * @param process - узлы процесса */
-export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pathMap: IPathMap): IMatrix => {
+export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pathMap: IPathMap): IBalanceResult => {
   /** Определить медиану */
   let ptm: IMedianResult = processToMedian(graph, matrix);
 
@@ -62,7 +62,10 @@ export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pat
 
   recursiveBalancing(graph, matrix, pathMap);
 
-  return ptm.matrix;
+  return {
+    median: ptm.median,
+    matrix: ptm.matrix
+  };
 }
 
 /** Определить ширину графа и выставить процесс в x = медиана

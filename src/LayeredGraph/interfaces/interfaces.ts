@@ -82,3 +82,9 @@ export interface IFakeResult {
   edges: IEdge[];
   pathMap: IPathMap;
 }
+
+/** Интерфейс, который возвращает балансировка */
+export interface IBalanceResult {
+  median: number;
+  matrix: IMatrix;
+}
