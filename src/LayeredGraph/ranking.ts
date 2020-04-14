@@ -1,4 +1,5 @@
 import { IEntry, IGraph, IGraphData, IMatrix, INumberMap } from './interfaces/interfaces';
+import { initProcess } from './initProcess';
 
 /** [Описание]
  * [1] Выбираем среди путей путь с наибольшей частотой (весом). Этот путь называется Процесс.
@@ -34,7 +35,7 @@ function setProcessRank(process: number[], graph: IGraph): IGraph {
   const processGraph: IGraph = {};
 
   /** Добавляем в процесс узлы начала и конца */
-  process = [0, ...process, 1];
+  process = initProcess(process);
 
   process.forEach((node: number, rank: number) => {
     /** Если критический путь */

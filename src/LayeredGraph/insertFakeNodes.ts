@@ -1,4 +1,4 @@
-import { IEdge, IGraph, IMatrix } from './interfaces/interfaces';
+import { IEdge, IFakeResult, IGraph, IMatrix, IPathMap } from './interfaces/interfaces';
 
 /** [Описание]
  * [1] Определяем, если между узлами ребро тянется через >1 уровней
@@ -12,16 +12,24 @@ import { IEdge, IGraph, IMatrix } from './interfaces/interfaces';
  * @param edges - ребра
  * @param graph - граф
  * @param matrix - матрица с ячейками */
-export const insertFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix): IEdge[] => {
+export const insertFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix): IFakeResult => {
   /** Индексы ребер, которые нужно удалить */
   let indexesToRemove: Set<number> = new Set();
+  /** Таблица отслеживания путей. Нужно ддля последующей балансировки дерева. */
+  const pathMap: IPathMap = {};
 
   /** Обходим все ребра и проверяем...*/
   edges.forEach((edge: IEdge, i: number) => {
     let delta: number = graph[edge.from].y - graph[edge.to].y;
     if (Math.abs(delta) > 1) {
+      /** Название пути */
+      const pathName: string = `${edge.from}=>${edge.to}`;
+      if (pathMap[pathName] === undefined) {
+        pathMap[pathName] = new Set<number>();
+      }
+
       /** Если ребро не соединяет соседние узлы процесса и ребро пересекает >1 уровня, вставляем фейковый узел */
-      indexesToRemove = insertFakeNode(edge.from, edge.to, graph, edges, i, matrix, delta, indexesToRemove);
+      indexesToRemove = insertFakeNode(edge.from, edge.to, graph, edges, i, matrix, delta, indexesToRemove, pathMap[pathName]);
     }
   });
 
@@ -32,7 +40,7 @@ export const insertFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix):
     edges.splice(indexes[i], 1);
   }
 
-  return edges;
+  return { edges, pathMap };
 }
 
 
@@ -44,15 +52,23 @@ export const insertFakeNodes = (edges: IEdge[], graph: IGraph, matrix: IMatrix):
  * @param i - индекс последнего ребра, которое нужно удалить
  * @param matrix - матрица
  * @param delta - разница
- * @param indexesToRemove - индексы ребер, которые нужно удалить по окончании циклов */
+ * @param indexesToRemove - индексы ребер, которые нужно удалить по окончании циклов
+ * @param path - путь
+ * */
 function insertFakeNode(from: number, to: number, graph: IGraph, edges: IEdge[], i: number, matrix: IMatrix,
-                        delta: number, indexesToRemove: Set<number>): Set<number> {
+                        delta: number, indexesToRemove: Set<number>, path: Set<number>): Set<number> {
 
   /** Добавляем индексы для удаления */
   indexesToRemove.add(i);
 
   /** Генерируем имя фейкового узла */
   const name: number = hashNodeName(from, to);
+
+  /** Добавляем узлы, которые не являются частью процесса, в путь */
+  if (graph[from].process === 0) path.add(from);
+  if (graph[to].process === 0) path.add(to);
+  path.add(name);
+
   /** Индекс последнего вставленного ребра в edges */
   let insertedNodeIndex: number = -1;
 
@@ -80,7 +96,7 @@ function insertFakeNode(from: number, to: number, graph: IGraph, edges: IEdge[],
   if (Math.abs(delta) > 1) {
     /** Добавляем индексы для удаления */
     indexesToRemove.add(insertedNodeIndex);
-    return insertFakeNode(name, to, graph, edges, insertedNodeIndex, matrix, delta, indexesToRemove);
+    return insertFakeNode(name, to, graph, edges, insertedNodeIndex, matrix, delta, indexesToRemove, path);
   }
 
   return indexesToRemove;

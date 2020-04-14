@@ -59,7 +59,6 @@ function findParentChild(graph: IGraph, elementsOnRank: IMatrix): IMatrix {
  * @param child - дочерний узел
  * @param graph - граф */
 function shiftRanks(rank: number, parent: number, child: number, graph: IGraph) {
-  console.log(`${parent}-->${child}`);
   /** Сортируем граф по уровням */
   const entries: IEntry[] = Object.entries(graph).sort((a: IEntry, b: IEntry) => a[1].y - b[1].y);
 

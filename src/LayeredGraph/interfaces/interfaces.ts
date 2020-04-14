@@ -39,7 +39,7 @@ export interface IPath {
 export interface IGraphData {
   nodes: INode[];
   edges: IEdge[];
-  paths?: IPath[];
+  paths: IPath[];
 }
 
 /** Граф */
@@ -64,8 +64,21 @@ export interface INumberMap<V> {
   [key: number]: V;
 }
 
+export interface IMap<V> {
+  [key: string]: V;
+}
+
 /** Object.entries(graph) */
 export type IEntry = [string, IGraphNode];
 
 /** Матрица */
 export type IMatrix = (number | undefined)[][];
+
+/** Тип для таблицы путей */
+export type IPathMap = IMap<Set<number>>;
+
+/** Возвращаемое значение insertFakeNodes */
+export interface IFakeResult {
+  edges: IEdge[];
+  pathMap: IPathMap;
+}

@@ -1,4 +1,4 @@
-import { IEdge, IGraph, IGraphData, IMatrix } from './interfaces/interfaces';
+import { IEdge, IFakeResult, IGraph, IGraphData, IMatrix } from './interfaces/interfaces';
 import { createGraph } from './createGraph';
 import { ranking } from './ranking';
 import { ordering } from './ordering';
@@ -15,6 +15,8 @@ export class LayeredGraph {
 
   /** Инициализируем граф */
   public init(): any {
+    console.log(this.data);
+
     /** [1] Создаем структуру графа */
     this.graph = createGraph(this.data);
 
@@ -27,10 +29,11 @@ export class LayeredGraph {
     const matrix: IMatrix = ordering(this.graph, elementsOnRank);
 
     /** [4] Вставляем фейковые узлы */
-    edges = insertFakeNodes(edges, this.graph, matrix);
+    const fakes: IFakeResult = insertFakeNodes(edges, this.graph, matrix);
+    edges = fakes.edges;
 
     /** [5] Балансировка */
-    balancing(this.graph, matrix);
+    balancing(this.data.paths[0].path, this.graph, matrix, fakes.pathMap);
 
     /** [6] Рисуем ребра */
     setTimeout(() => {
