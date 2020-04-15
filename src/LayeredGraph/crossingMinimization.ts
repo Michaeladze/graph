@@ -8,13 +8,13 @@ import { rearrangeMatrix } from './rearrangeMatrix';
  */
 export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalanceResult, pathMap: IPathMap) => {
 
+  /** Таблица выполненных свэпов узлов */
   let processed: any = {};
 
-  const iter = () => {
+  const iter = (side: string) => {
     /** Для каждого уровня матрицы меняем узлы местами и смотрим, если пересечений стало меньше */
     for (let i: number = 0; i < matrix.length; i++) {
       if (matrix[i + 1]) {
-        console.log('======', i, '=======')
         /** Минимальное число пересечений */
         let minCount: number = Number.MAX_SAFE_INTEGER;
         /** Указатели на индексы и узлы */
@@ -23,10 +23,13 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
         let node1: number | undefined;
         let node2: number | undefined;
 
+        let j: number = side === 'left' ? 0 : median + 1;
+        let c: number = j + 1;
+
         /** Обходим каждый узел уровня и меняем его с другим узлом */
         loop:
-        for (let j: number = 0; j < matrix[i].length; j++) {
-          for (let c: number = j + 1; c < matrix[i].length; c++) {
+        for (j; side === 'left' ? j < median : j < matrix[i].length; j++) {
+          for (c; side === 'left' ? c < median : c < matrix[i].length; c++) {
             /** Если это не медиана и хотя бы один узел не undefined */
             if (j !== median && c !== median &&
               ((matrix[i][j] !== undefined && matrix[i][c] === undefined) ||
@@ -40,9 +43,12 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
               /** Количество пересечений */
               const count: number = crossingCount(matrix[i], matrix[i + 1], graph);
 
-              if (processed[`${matrix[i][j]}<=>${matrix[i][c]}`] === undefined) {
+              /** Ключ для объекта с пройденными свэпами */
+              const key: string = `${i}-${j}<=>${i}-${c}`;
+
+              if (processed[key] === undefined) {
                 /** Помечаем связку как пройденную */
-                processed[`${matrix[i][j]}<=>${matrix[i][c]}`] = count;
+                processed[key] = count;
 
                 if (count < minCount) {
                   /** Если нашли такой кейс, где число пересечений меньше минимального,
@@ -68,10 +74,11 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
             }
           }
         }
-
-        if (node1 && node2) {
-          /** Если есть два узла, которые удалось поменять местами, присваиваем им новые X  */
+        if (node1) {
           graph[node1].x = index1;
+        }
+
+        if (node2) {
           graph[node2].x = index2;
         }
       }
@@ -82,11 +89,9 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
   }
 
   /** Несколько раз выполняем итерацию для более точного результата */
-  for (let i = 0; i < 10; i++) {
-    iter();
-    if (i % 3 === 0) {
-      processed = {};
-    }
+  for (let i = 0; i < 100; i++) {
+    iter('left');
+    iter('right');
   }
 }
 
