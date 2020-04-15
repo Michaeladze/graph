@@ -18,7 +18,8 @@ export const createGraph = (data: IGraphData): IGraph => {
         parents: [],
         process: 0,
         processSibling: 0,
-        fake: 0
+        fake: 0,
+        css: {}
       };
     }
 
@@ -30,7 +31,8 @@ export const createGraph = (data: IGraphData): IGraph => {
         parents: [],
         process: 0,
         processSibling: 0,
-        fake: 0
+        fake: 0,
+        css: {}
       };
     }
 

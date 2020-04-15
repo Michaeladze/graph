@@ -134,7 +134,8 @@ function insertNode(graph: IGraph,
     parents: [from],
     process: 0,
     processSibling: 0,
-    fake: 1
+    fake: 1,
+    css: {}
   };
 
   /** Добавляем name в дочерние узлы родителю и убираем непосредственную связь from - to */

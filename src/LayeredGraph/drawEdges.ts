@@ -13,7 +13,9 @@ export const drawEdges = (edges: IEdge[], graph: IGraph) => {
       const s = graph[edge.from];
       const e = graph[edge.to];
 
-      const d = `M${80 * s.x + 20} ${80 * s.y + 20} L ${80 * e.x + 20} ${80 * e.y + 20}`
+
+      const d = `M${s.css.translate.x + s.css.width / 2} ${s.css.translate.y + s.css.height / 2} 
+                 L ${e.css.translate.x + e.css.width / 2} ${e.css.translate.y + e.css.height / 2}`
 
       const line = document.createElementNS(ns, 'path');
       line.classList.add(id);
@@ -37,8 +39,8 @@ function drawBoard() {
     const ns = 'http://www.w3.org/2000/svg';
     const svg = document.createElementNS(ns, 'svg');
     svg.setAttributeNS(ns, 'id', `graph-svg`);
-    svg.style.width = `1000px`;
-    svg.style.height = `1000px`;
+    svg.style.width = `1920px`;
+    svg.style.height = `1200px`;
 
     // Marker
     const defs = document.createElementNS(ns, 'defs');

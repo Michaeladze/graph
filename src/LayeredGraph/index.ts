@@ -2,11 +2,11 @@ import { IBalanceResult, IEdge, IFakeResult, IGraph, IGraphData, IMatrix } from 
 import { createGraph } from './createGraph';
 import { ranking } from './ranking';
 import { ordering } from './ordering';
-import { drawEdges } from './drawEdges';
 import { insertFakeNodes } from './insertFakeNodes';
 import { balancing } from './balancing';
 import { crossingMinimization } from './crossingMinimization';
 import { shrink } from './shrink';
+import { drawEdges } from './drawEdges';
 
 export class LayeredGraph {
   /** Граф */
@@ -50,23 +50,40 @@ export class LayeredGraph {
     this.matrix = shrinkResult.matrix;
     this.median = shrinkResult.median;
 
-    /** [7] Рисуем ребра */
-    setTimeout(() => {
-      drawEdges(edges, this.graph);
-    }, 500);
-
     /** Создаем массив узлов с координатами */
     const nodes: any = Object.keys(this.graph).map((n: string) => {
+      const proximity: number = this.graph[+n].x - this.median !== 0 ?
+        this.graph[+n].x - this.median / Math.abs(this.graph[+n].x - this.median) : 0;
+      const deltaX: number = this.graph[+n].fake ? -proximity * 40 : 0;
+
+      this.graph[+n].css = {
+        width: 150,
+        height: 50,
+        translate: {
+          x: this.graph[+n].x * 200 + deltaX,
+          y: this.graph[+n].y * 100
+        }
+      }
+
       return {
         name: n,
         x: this.graph[+n].x,
         y: this.graph[+n].y,
         process: this.graph[+n].process,
-        fake: this.graph[+n].fake
+        fake: this.graph[+n].fake,
+        proximity,
+        css: this.graph[+n].css
       }
     });
 
-    console.log(this.graph);
-    return nodes;
+    /** [8] Рисуем ребра */
+    setTimeout(() => {
+      drawEdges(edges, this.graph);
+    }, 500);
+
+    return {
+      nodes,
+      graph: this.graph
+    };
   }
 }

@@ -12,10 +12,10 @@
     align-items: center;
     justify-content: center;
 
-    width: 40px;
-    height: 40px;
+    border: 1px solid #2B344850;
     background-color: lightgray;
-    border-radius: 50%;
+    box-sizing: border-box;
+    border-radius: 40px;
 
     font-size: 10px;
     cursor: default;
@@ -26,13 +26,16 @@
 }
 
 .node--fake {
-    background-color: lightpink;
-    opacity: 0.7;
+    background-color: #ffb6c150;
+    display: none;
 }
 
 .scene svg {
     position: absolute;
     top: 0;
     left: 0;
+}
 
+.proximity {
+    color: crimson;
 }

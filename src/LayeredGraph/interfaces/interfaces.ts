@@ -58,6 +58,8 @@ export interface IGraphNode {
   processSibling: number;
   /** Фейковый узел */
   fake: number;
+  /** css стили */
+  css: IMap<any>;
 }
 
 export interface INumberMap<V> {

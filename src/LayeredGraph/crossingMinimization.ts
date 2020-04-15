@@ -1,6 +1,7 @@
 import { IBalanceResult, IGraph, IMatrix } from './interfaces/interfaces';
 import { rearrangeMatrix } from './rearrangeMatrix';
 
+
 /** Алгоритм уменьшения количества пересечений ребер
  * @param graph - граф
  * @param balance - результат выполнения балансировки
@@ -25,15 +26,15 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
         let j: number = side === 'left' ? 0 : median + 1;
         let c: number = j + 1;
 
-        /** Обходим каждый узел уровня и меняем его с другим узлом */
+        /** Обходим каждый фейковый узел уровня и меняем его с другим узлом */
         loop:
           for (j; side === 'left' ? j < median : j < matrix[i].length; j++) {
             for (c; side === 'left' ? c < median : c < matrix[i].length; c++) {
               /** Если это не медиана и хотя бы один узел не undefined */
               if (j !== median && c !== median &&
-                ((matrix[i][j] !== undefined && matrix[i][c] === undefined) ||
+                ((matrix[i][j] !== undefined && matrix[i][c] === undefined && graph[matrix[i][j] as number].fake) ||
                   (matrix[i][j] !== undefined && matrix[i][c] !== undefined) ||
-                  (matrix[i][j] === undefined && matrix[i][c] !== undefined))) {
+                  (matrix[i][j] === undefined && matrix[i][c] !== undefined && graph[matrix[i][c] as number].fake))) {
                 /** Меняем местами два соседних элемента и проверяем, сколько пересечений */
                 const tmp = matrix[i][j];
                 matrix[i][j] = matrix[i][c];

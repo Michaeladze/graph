@@ -13,19 +13,26 @@ const Graph: React.FC<IProps> = ({ data }) => {
 
   useEffect(() => {
     const graph = new LayeredGraph(data);
-    const nodes: any = graph.init();
+    const { nodes }: any = graph.init();
     setNodes(nodes);
   }, []);
 
   /** Выводим ухлы на экран */
-  const nodesJSX = nodes.map((n: any) =>
-    <div
-      key={n.name}
-      id={n.name.replace(/\s/g, '-').toLowerCase()}
-      className={`node ${n.process ? 'node--process' : ''} ${n.fake ? 'node--fake' : ''}`}
-      style={{ transform: `translate(${n.x * 80}px, ${n.y * 80}px)` }}>
-      {n.name}
-    </div>
+  const nodesJSX = nodes.map((n: any) => {
+      return (
+        <div
+          key={n.name}
+          id={n.name.replace(/\s/g, '-').toLowerCase()}
+          className={`node ${n.process ? 'node--process' : ''} ${n.fake ? 'node--fake' : ''}`}
+          style={{
+            width: n.css.width,
+            height: n.css.height,
+            transform: `translate(${n.css.translate.x}px, ${n.css.translate.y}px)`
+          }}>
+          {n.fake ? 'F' : n.name}
+        </div>
+      )
+    }
   )
 
   return (
