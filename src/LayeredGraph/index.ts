@@ -1,4 +1,4 @@
-import { IBalanceResult, IEdge, IFakeResult, IGraph, IGraphData, IMatrix, IPathMap } from './interfaces/interfaces';
+import { IBalanceResult, IEdge, IFakeResult, IGraph, IGraphData, IMatrix } from './interfaces/interfaces';
 import { createGraph } from './createGraph';
 import { ranking } from './ranking';
 import { ordering } from './ordering';
@@ -6,10 +6,15 @@ import { drawEdges } from './drawEdges';
 import { insertFakeNodes } from './insertFakeNodes';
 import { balancing } from './balancing';
 import { crossingMinimization } from './crossingMinimization';
+import { shrink } from './shrink';
 
 export class LayeredGraph {
   /** Граф */
   public graph: IGraph = {};
+  /** Матрица */
+  public matrix: IMatrix = [];
+  /** Медиана */
+  public median: number = 0;
 
   constructor(public data: IGraphData) {
   }
@@ -27,20 +32,23 @@ export class LayeredGraph {
     const elementsOnRank: IMatrix = ranking(this.data, this.graph);
 
     /** [3] Распределяем узлы по горизонтали */
-    let matrix: IMatrix = ordering(this.graph, elementsOnRank);
+    this.matrix = ordering(this.graph, elementsOnRank);
 
     /** [4] Вставляем фейковые узлы */
-    const fakes: IFakeResult = insertFakeNodes(edges, this.graph, matrix);
+    const fakes: IFakeResult = insertFakeNodes(edges, this.graph, this.matrix);
     edges = fakes.edges;
 
-    /** Копируем таблицу путей */
-    const pathMap: IPathMap = {...fakes.pathMap};
-
     /** [5] Балансировка */
-    const balance: IBalanceResult = balancing(this.data.paths[0].path, this.graph, matrix, fakes.pathMap);
+    const balance: IBalanceResult = balancing(this.data.paths[0].path, this.graph, this.matrix, fakes.pathMap);
+    this.median = balance.median;
 
     /** [6] Уменьшаем количество пересечений */
-    crossingMinimization(this.graph, balance, pathMap);
+    this.matrix = crossingMinimization(this.graph, balance);
+
+    /** [7] Убираем пустые ячейки */
+    const shrinkResult: IBalanceResult = shrink(this.graph, this.matrix, this.median);
+    this.matrix = shrinkResult.matrix;
+    this.median = shrinkResult.median;
 
     /** [7] Рисуем ребра */
     setTimeout(() => {

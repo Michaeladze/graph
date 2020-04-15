@@ -1,12 +1,11 @@
-import { IBalanceResult, IGraph, IPathMap } from './interfaces/interfaces';
+import { IBalanceResult, IGraph, IMatrix } from './interfaces/interfaces';
 import { rearrangeMatrix } from './rearrangeMatrix';
 
 /** Алгоритм уменьшения количества пересечений ребер
  * @param graph - граф
  * @param balance - результат выполнения балансировки
- * @param pathMap - таблица путей
  */
-export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalanceResult, pathMap: IPathMap) => {
+export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalanceResult): IMatrix => {
 
   /** Таблица выполненных свэпов узлов */
   let processed: any = {};
@@ -28,52 +27,52 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
 
         /** Обходим каждый узел уровня и меняем его с другим узлом */
         loop:
-        for (j; side === 'left' ? j < median : j < matrix[i].length; j++) {
-          for (c; side === 'left' ? c < median : c < matrix[i].length; c++) {
-            /** Если это не медиана и хотя бы один узел не undefined */
-            if (j !== median && c !== median &&
-              ((matrix[i][j] !== undefined && matrix[i][c] === undefined) ||
-                (matrix[i][j] !== undefined && matrix[i][c] !== undefined) ||
-                (matrix[i][j] === undefined && matrix[i][c] !== undefined))) {
-              /** Меняем местами два соседних элемента и проверяем, сколько пересечений */
-              const tmp = matrix[i][j];
-              matrix[i][j] = matrix[i][c];
-              matrix[i][c] = tmp;
+          for (j; side === 'left' ? j < median : j < matrix[i].length; j++) {
+            for (c; side === 'left' ? c < median : c < matrix[i].length; c++) {
+              /** Если это не медиана и хотя бы один узел не undefined */
+              if (j !== median && c !== median &&
+                ((matrix[i][j] !== undefined && matrix[i][c] === undefined) ||
+                  (matrix[i][j] !== undefined && matrix[i][c] !== undefined) ||
+                  (matrix[i][j] === undefined && matrix[i][c] !== undefined))) {
+                /** Меняем местами два соседних элемента и проверяем, сколько пересечений */
+                const tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][c];
+                matrix[i][c] = tmp;
 
-              /** Количество пересечений */
-              const count: number = crossingCount(matrix[i], matrix[i + 1], graph);
+                /** Количество пересечений */
+                const count: number = crossingCount(matrix[i], matrix[i + 1], graph);
 
-              /** Ключ для объекта с пройденными свэпами */
-              const key: string = `${i}-${j}<=>${i}-${c}`;
+                /** Ключ для объекта с пройденными свэпами */
+                const key: string = `${i}-${j}<=>${i}-${c}`;
 
-              if (processed[key] === undefined) {
-                /** Помечаем связку как пройденную */
-                processed[key] = count;
+                if (processed[key] === undefined) {
+                  /** Помечаем связку как пройденную */
+                  processed[key] = count;
 
-                if (count < minCount) {
-                  /** Если нашли такой кейс, где число пересечений меньше минимального,
-                   * делаем его минимальным */
-                  minCount = count;
-                  index1 = j;
-                  index2 = c;
-                  node1 = matrix[i][j];
-                  node2 = matrix[i][c];
+                  if (count < minCount) {
+                    /** Если нашли такой кейс, где число пересечений меньше минимального,
+                     * делаем его минимальным */
+                    minCount = count;
+                    index1 = j;
+                    index2 = c;
+                    node1 = matrix[i][j];
+                    node2 = matrix[i][c];
 
-                  if (count === 0) {
-                    /** Если число пересечений равно 0, то выходим из цикла */
-                    matrix[i][c] = matrix[i][j];
-                    matrix[i][j] = tmp;
-                    break loop;
+                    if (count === 0) {
+                      /** Если число пересечений равно 0, то выходим из цикла */
+                      matrix[i][c] = matrix[i][j];
+                      matrix[i][j] = tmp;
+                      break loop;
+                    }
                   }
-                }
 
-                /** Откатываем swap, чтобы не нарушить итерацию */
-                matrix[i][c] = matrix[i][j];
-                matrix[i][j] = tmp;
+                  /** Откатываем swap, чтобы не нарушить итерацию */
+                  matrix[i][c] = matrix[i][j];
+                  matrix[i][j] = tmp;
+                }
               }
             }
           }
-        }
         if (node1) {
           graph[node1].x = index1;
         }
@@ -93,6 +92,8 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
     iter('left');
     iter('right');
   }
+
+  return matrix;
 }
 
 /** Функция считает количество пересечений между уровнями
