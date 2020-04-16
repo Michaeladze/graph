@@ -175,7 +175,7 @@ function shiftToLeft(graph: IGraph, pathToMove: IEntry, ptm: IMedianResult,
  * @param pathMap - таблица путей
  */
 function removeNeighbours(process: number[], pathMap: IPathMap): IPathMap {
-  const sequence: string = initProcess(process).join('=>');
+  const sequence: string = process.join('=>');
 
   for (const path in pathMap) {
     /** Если путь является частью процесса и узлы находятс яна соседних уровнях, удаляем путь */

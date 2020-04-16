@@ -69,6 +69,10 @@ export default {
       to: 6
     },
     {
+      from: 4,
+      to: 7
+    },
+    {
       from: 2,
       to: 7
     },

@@ -7,6 +7,7 @@ import { balancing } from './balancing';
 import { crossingMinimization } from './crossingMinimization';
 import { shrink } from './shrink';
 import { drawEdges } from './drawEdges';
+import { initProcess } from './initProcess';
 
 export class LayeredGraph {
   /** Граф */
@@ -15,6 +16,8 @@ export class LayeredGraph {
   public matrix: IMatrix = [];
   /** Медиана */
   public median: number = 0;
+  /** Процесс */
+  public process: number[] = [];
 
   constructor(public data: IGraphData) {
   }
@@ -22,6 +25,8 @@ export class LayeredGraph {
   /** Инициализируем граф */
   public init(): any {
     console.log(this.data);
+
+    this.process = initProcess(this.data.paths[0].path);
 
     /** [1] Создаем структуру графа */
     this.graph = createGraph(this.data);
@@ -39,7 +44,7 @@ export class LayeredGraph {
     edges = fakes.edges;
 
     /** [5] Балансировка */
-    const balance: IBalanceResult = balancing(this.data.paths[0].path, this.graph, this.matrix, fakes.pathMap);
+    const balance: IBalanceResult = balancing(this.process, this.graph, this.matrix, fakes.pathMap);
     this.median = balance.median;
 
     /** [6] Уменьшаем количество пересечений */
@@ -78,8 +83,10 @@ export class LayeredGraph {
 
     /** [8] Рисуем ребра */
     setTimeout(() => {
-      drawEdges(edges, this.graph);
+      drawEdges(edges, this.graph, fakes.pathMap, this.median, this.process);
     }, 500);
+
+    console.log(this.graph)
 
     return {
       nodes,
