@@ -8,7 +8,7 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, paths: IPathMap, median
   if (svg) {
 
     /** Таблица с координатами третьей точки на каждом из путей */
-    const thirdPoint: IMap<{ x: number; y: number }> = {};
+    const thirdPoint: IMap<{ x: number; y: number; proximity: number }> = {};
 
     const pathMap: IPathMap = { ...paths };
 
@@ -21,6 +21,7 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, paths: IPathMap, median
         delete pathMap[from];
       }
 
+      let proximity: number = 0;
       let accY: number = 0;
       let maxX: number = median;
       let decreaseSize: number = 0;
@@ -31,6 +32,7 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, paths: IPathMap, median
         }
         if (node !== +from && node !== +to) {
           accY += graph[node].y;
+          proximity += graph[node].proximity || 0
 
           let dx: number = 0;
           if (graph[node].x - median > 0) {
@@ -45,7 +47,11 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, paths: IPathMap, median
         }
       });
 
-      thirdPoint[path] = { x: maxX, y: accY / (pathMap[path].size - decreaseSize) };
+      thirdPoint[path] = {
+        x: maxX,
+        y: accY / (pathMap[path].size - decreaseSize),
+        proximity: proximity / (pathMap[path].size - decreaseSize)
+      };
     }
     console.log(thirdPoint)
 
@@ -59,6 +65,7 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, paths: IPathMap, median
 
       const w: number = +s.css.width / 2;
       const h: number = +s.css.height / 2;
+      const deltaX: number = m.proximity * (-w / 2);
 
       /** Прямые линии */
       // const d = `M${s.css.translate.x + w} ${s.css.translate.y + h}
@@ -71,7 +78,7 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, paths: IPathMap, median
 
       /** Кубическая функция */
       const d = `M${s.css.translate.x + w} ${s.css.translate.y + h}
-                 C ${m.x * 200 + w} ${m.y * 100 + h} ${m.x * 200 + w} ${m.y * 110 + h} ${e.css.translate.x + w} ${e.css.translate.y + h}`;
+                 C ${m.x * 200 + w + deltaX} ${m.y * 100 + h} ${m.x * 200 + w + deltaX} ${m.y * 110 + h} ${e.css.translate.x + w} ${e.css.translate.y + h}`;
 
       const ns = 'http://www.w3.org/2000/svg';
       const id = `${from}=>${to}`;

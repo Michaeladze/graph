@@ -60,6 +60,8 @@ export interface IGraphNode {
   fake: number;
   /** css стили */
   css: IMap<any>;
+  /** Удаленность от процесса */
+  proximity?: number;
 }
 
 export interface INumberMap<V> {
