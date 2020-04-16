@@ -29,7 +29,7 @@ const Graph: React.FC<IProps> = ({ data }) => {
             height: n.css.height,
             transform: `translate(${n.css.translate.x}px, ${n.css.translate.y}px)`
           }}>
-          {n.fake ? 'F' : n.name}
+          {n.name}
         </div>
       )
     }

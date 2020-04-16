@@ -54,13 +54,13 @@ export class LayeredGraph {
     const nodes: any = Object.keys(this.graph).map((n: string) => {
       const proximity: number = this.graph[+n].x - this.median !== 0 ?
         this.graph[+n].x - this.median / Math.abs(this.graph[+n].x - this.median) : 0;
-      const deltaX: number = this.graph[+n].fake ? -proximity * 40 : 0;
+      const deltaX: number = this.graph[+n].fake ? -proximity * 45 : 0;
 
       this.graph[+n].css = {
         width: 150,
         height: 50,
         translate: {
-          x: this.graph[+n].x * 200 + deltaX,
+          x: this.graph[+n].x * 200,
           y: this.graph[+n].y * 100
         }
       }

@@ -16,12 +16,13 @@ type IEntry = [string, Set<number>];
 /** Функция балансировки графа
  * @param graph - граф
  * @param matrix - матрица
- * @param pathMap - таблица путей
+ * @param paths - таблица путей
  * @param process - узлы процесса */
-export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, pathMap: IPathMap): IBalanceResult => {
+export const balancing = (process: number[], graph: IGraph, matrix: IMatrix, paths: IPathMap): IBalanceResult => {
   /** Определить медиану */
   let ptm: IMedianResult = processToMedian(graph, matrix);
 
+  let pathMap: IPathMap = { ...paths };
   /** Исключаем из pathMap соседние узлы процесса */
   pathMap = removeNeighbours(process, pathMap);
 

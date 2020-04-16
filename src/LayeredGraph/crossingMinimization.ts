@@ -33,7 +33,7 @@ export const crossingMinimization = (graph: IGraph, { matrix, median }: IBalance
               /** Если это не медиана и хотя бы один узел не undefined */
               if (j !== median && c !== median &&
                 ((matrix[i][j] !== undefined && matrix[i][c] === undefined && graph[matrix[i][j] as number].fake) ||
-                  (matrix[i][j] !== undefined && matrix[i][c] !== undefined) ||
+                  (matrix[i][j] !== undefined && matrix[i][c] !== undefined && graph[matrix[i][j] as number].fake && graph[matrix[i][c] as number].fake) ||
                   (matrix[i][j] === undefined && matrix[i][c] !== undefined && graph[matrix[i][c] as number].fake))) {
                 /** Меняем местами два соседних элемента и проверяем, сколько пересечений */
                 const tmp = matrix[i][j];
