@@ -27,7 +27,7 @@
 
 .node--fake {
     background-color: #ffb6c150;
-    display: none;
+    /*display: none;*/
 }
 
 .scene svg {
