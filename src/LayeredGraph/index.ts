@@ -8,6 +8,7 @@ import { crossingMinimization } from './crossingMinimization';
 import { shrink } from './shrink';
 import { drawEdges } from './drawEdges';
 import { initProcess } from './initProcess';
+import { shrinkFakeNodes } from './shrinkFakeNodes';
 
 export class LayeredGraph {
   /** Граф */
@@ -81,6 +82,9 @@ export class LayeredGraph {
         css: this.graph[+n].css
       }
     });
+
+    /** Сжимаем фейковые узлы */
+    shrinkFakeNodes(this.graph, this.matrix, this.median);
 
     /** [8] Рисуем ребра */
     setTimeout(() => {

@@ -45,7 +45,7 @@ export default {
       to: 1
     },
     {
-      from: 2,
+      from: 3,
       to: 5
     },
     {
@@ -54,35 +54,7 @@ export default {
     },
     {
       from: 0,
-      to: 5
-    },
-    {
-      from: 6,
       to: 4
-    },
-    {
-      from: 4,
-      to: 6
-    },
-    {
-      from: 2,
-      to: 6
-    },
-    {
-      from: 4,
-      to: 7
-    },
-    {
-      from: 2,
-      to: 7
-    },
-    {
-      from: 1,
-      to: 7
-    },
-    {
-      from: 7,
-      to: 1
     }
   ],
   paths: [
