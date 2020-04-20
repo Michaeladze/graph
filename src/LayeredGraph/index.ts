@@ -97,7 +97,7 @@ export class LayeredGraph {
 
     /** [8] Рисуем ребра */
     setTimeout(() => {
-      drawEdges(edges, this.graph, fakes.pathMap, this.median, this.process);
+      drawEdges(edges, this.graph, fakes.pathMap, this.process);
     }, 500);
 
     console.log(this.graph)

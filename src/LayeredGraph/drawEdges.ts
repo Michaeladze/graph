@@ -2,7 +2,7 @@
 import { IEdge, IGraph, IGraphNode, IMap, IPathMap } from './interfaces/interfaces';
 import * as d3 from 'd3';
 
-export const drawEdges = (edges: IEdge[], graph: IGraph, pathMap: IPathMap, median: number, process: number[]) => {
+export const drawEdges = (edges: IEdge[], graph: IGraph, pathMap: IPathMap, process: number[]) => {
 
   const w = 2000;
   const h = 2000;
@@ -20,15 +20,16 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, pathMap: IPathMap, medi
       .x((d) => d[0])
       .y((d) => d[1])
       .curve(d3.curveMonotoneY)
-      // .curve(d3.curveCatmullRom.alpha(1))
+    // .curve(d3.curveCatmullRom.alpha(1))
 
+    const isProcess: boolean = process.join('=>').indexOf(path) >= 0;
 
     svg.append('path')
       // @ts-ignore
       .attr('d', l(coords))
       .style('fill', 'none')
       .style('stroke', '#A5BFDD')
-      .style('stroke-width', '1px')
+      .style('stroke-width', isProcess ? '3px' : '1px')
   }
 }
 
