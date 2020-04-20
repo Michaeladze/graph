@@ -31,6 +31,8 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, pathMap: IPathMap, proc
       .style('stroke', '#A5BFDD')
       .style('stroke-width', isProcess ? '3px' : '1px')
   }
+
+  // appendOverlayRect(graph, svg);
 }
 
 /** Считаем координаты */
@@ -73,4 +75,24 @@ function calculateCoords(node: IGraphNode): [number, number] {
     node.css.translate.x + node.css.width / 2,
     node.css.translate.y + node.css.height / 2,
   ]
+}
+
+/** Добавляем подложки под узлы, чтобы считать пересечения с ребрами */
+function appendOverlayRect(graph: IGraph, svg: any) {
+  for (const key in graph) {
+    if (!graph[key].fake) {
+      const c: IGraphNode = graph[key];
+      svg.append('rect')
+        .attr('id', `rect-${key}`)
+        .style('x', c.css.translate.x)
+        .style('rx', '8')
+        .style('y', c.css.translate.y)
+        .style('ry', '8')
+        .style('width', c.css.width)
+        .style('height', c.css.height)
+        .style('stroke', 'crimson')
+        .style('fill', 'transparent')
+        .style('stroke-width', '1px')
+    }
+  }
 }
