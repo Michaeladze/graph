@@ -30,8 +30,10 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, pathMap: IPathMap, proc
       .style('fill', 'none')
       .style('stroke', '#A5BFDD')
       .style('stroke-width', isProcess ? '3px' : '1px')
+      .attr('marker-end', 'url(#marker-arrow)')
   }
 
+  createMarker(svg);
   // appendOverlayRect(graph, svg);
 }
 
@@ -95,4 +97,22 @@ function appendOverlayRect(graph: IGraph, svg: any) {
         .style('stroke-width', '1px')
     }
   }
+}
+
+/** Создать маркер */
+function createMarker(svg: any) {
+  svg
+    .append('defs')
+    .append('marker')
+    .attr('id', 'marker-arrow')
+    .attr('viewBox', '0 0 5 5')
+    .attr('refX', '5')
+    .attr('refY', '2.5')
+    .attr('markerUnits', 'strokeWidth')
+    .attr('markerWidth', '5')
+    .attr('markerHeight', '5')
+    .attr('orient', 'auto')
+    .attr('fill', '#A5BFDD')
+    .append('path')
+    .attr('d', 'M 0 0 L 5 2.5 L 0 5 z')
 }
