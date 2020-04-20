@@ -27,7 +27,7 @@ export const drawEdges = (edges: IEdge[], graph: IGraph, pathMap: IPathMap, medi
       // @ts-ignore
       .attr('d', l(coords))
       .style('fill', 'none')
-      .style('stroke', '#c6c6c6')
+      .style('stroke', '#A5BFDD')
       .style('stroke-width', '1px')
   }
 }

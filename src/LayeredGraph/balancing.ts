@@ -144,14 +144,6 @@ function shiftToLeft(graph: IGraph, pathToMove: IEntry, ptm: IMedianResult,
     for (let x: number = ptm.median; x >= 0; x--) {
       if (ptm.matrix[graph[node].y][x] === undefined) {
 
-        // /** Сдвигаем все узлы справа того же уровня на один влево, чтобы заполнить пустоты  */
-        // for (let rx: number = graph[node].x + 1; rx < ptm.matrix[graph[node].y].length; rx++) {
-        //   const n: number | undefined = ptm.matrix[graph[node].y][rx];
-        //   if (n && graph[n].x !== ptm.median && ptm.matrix[graph[node].y][graph[n].x - 1] === undefined) {
-        //     graph[n].x = graph[n].x - 1;
-        //   }
-        // }
-
         /** Устанавливаем узлу графа новую координату */
         graph[node].x = x;
 

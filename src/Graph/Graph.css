@@ -2,32 +2,25 @@
     position: relative;
 }
 
-.node {
+.graph__node {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 10;
-
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border: 1px solid #2B344850;
-    background-color: lightgray;
-    box-sizing: border-box;
-    border-radius: 40px;
-
-    font-size: 10px;
+    background-color: white;
     cursor: default;
 }
 
-.node--process {
-    background-color: lightblue;
-}
 
-.node--fake {
-    background-color: #ffb6c150;
-    display: none;
+.graph__node--fake {
+    display: inline;
+    background-color: transparent;
+    /*background-color: #ffb6c150;*/
+    /*display: none;*/
 }
 
 .scene svg {
@@ -36,6 +29,11 @@
     left: 0;
 }
 
-.proximity {
-    color: crimson;
+.graph__edge-count {
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 14px;
+    color: #2B3448;
+    background-color: #ffffff80;
 }
+

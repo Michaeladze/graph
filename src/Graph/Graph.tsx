@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Graph.css';
 import { IGraphData } from '../LayeredGraph/interfaces/interfaces';
 import { LayeredGraph } from '../LayeredGraph';
+import GraphNode from '../GraphNode/GraphNode';
 
 interface IProps {
   data: IGraphData;
@@ -23,13 +24,14 @@ const Graph: React.FC<IProps> = ({ data }) => {
         <div
           key={n.name}
           id={n.name.replace(/\s/g, '-').toLowerCase()}
-          className={`node ${n.process ? 'node--process' : ''} ${n.fake ? 'node--fake' : ''}`}
+          className={`graph__node ${n.fake ? 'graph__node--fake' : ''}`}
           style={{
             width: n.css.width,
             height: n.css.height,
             transform: `translate(${n.css.translate.x}px, ${n.css.translate.y}px)`
           }}>
-          {n.name}
+          {n.node && <GraphNode item={n}/>}
+          {n.count && <span className='graph__edge-count'>{n.count}</span>}
         </div>
       )
     }

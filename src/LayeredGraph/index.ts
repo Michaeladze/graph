@@ -7,8 +7,9 @@ import { balancing } from './balancing';
 import { crossingMinimization } from './crossingMinimization';
 import { shrink } from './shrink';
 import { drawEdges } from './drawEdges';
-import { initProcess } from './initProcess';
 import { shrinkFakeNodes } from './shrinkFakeNodes';
+import { detectStartEnd } from './detectStartEnd';
+import { insertMetrics } from './insertMetrics';
 
 export class LayeredGraph {
   /** Граф */
@@ -19,6 +20,10 @@ export class LayeredGraph {
   public median: number = 0;
   /** Процесс */
   public process: number[] = [];
+  /** Начало процесса */
+  public start: number = -1;
+  /** Конец процесса */
+  public end: number = -1;
 
   constructor(public data: IGraphData) {
   }
@@ -27,10 +32,15 @@ export class LayeredGraph {
   public init(): any {
     console.log(this.data);
 
-    this.process = initProcess(this.data.paths[0].path);
-
     /** [1] Создаем структуру графа */
     this.graph = createGraph(this.data);
+
+    /** Определяем стартовую и конечную координаты */
+    const startEnd: number[] = detectStartEnd(this.data.nodes, this.graph);
+    this.start = startEnd[0];
+    this.end = startEnd[1];
+
+    this.process = [this.start, ...this.data.paths[0].path, this.end];
 
     let edges: IEdge[] = [...this.data.edges];
 
@@ -56,30 +66,29 @@ export class LayeredGraph {
     this.matrix = shrinkResult.matrix;
     this.median = shrinkResult.median;
 
+    /** Вставляем в фейковые узлы количество переходов */
+    insertMetrics(this.graph, this.data.edges, fakes.pathMap);
+
     /** Создаем массив узлов с координатами */
     const nodes: any = Object.keys(this.graph).map((n: string) => {
-      const proximity: number = this.graph[+n].x - this.median !== 0 ?
-        this.graph[+n].x - this.median / Math.abs(this.graph[+n].x - this.median) : 0;
-      // const deltaX: number = this.graph[+n].fake ? -proximity * 45 : 0;
-      this.graph[+n].proximity = proximity;
-
       this.graph[+n].css = {
-        width: 150,
-        height: 50,
+        width: 176,
+        height: 48,
         translate: {
-          x: this.graph[+n].x * 200,
-          y: this.graph[+n].y * 100
+          x: this.graph[+n].x * 220,
+          y: this.graph[+n].y * 98
         }
       }
 
       return {
         name: n,
+        node: this.data.nodes[+n],
         x: this.graph[+n].x,
         y: this.graph[+n].y,
         process: this.graph[+n].process,
         fake: this.graph[+n].fake,
-        proximity,
-        css: this.graph[+n].css
+        css: this.graph[+n].css,
+        count: this.graph[+n].count
       }
     });
 
