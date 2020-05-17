@@ -134,7 +134,7 @@ const Graph: React.FC<IProps> = ({ data }) => {
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}>
-        {n.node && <GraphNode item={n} />}
+        {n.node && <GraphNode item={n}/>}
 
         {n.fake === 1 && n.name}
       </div>

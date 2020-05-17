@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Graph from './Graph/Graph';
+import { IGraphData } from './Graph/LayeredGraph/interfaces/interfaces';
 
 function App() {
 
-  // @ts-ignore
-  const data = window.GRAPH_DATA;
+  const [data, setData] = useState<IGraphData | null>(null)
+
+  useEffect(() => {
+    window.addEventListener('renderGraph', (e: any) => {
+      setData(e.detail);
+    });
+  }, [])
 
   return (
     <div className="App">
-      <Graph data={data}/>
+      {data && <Graph data={data}/>}
     </div>
   );
 }
