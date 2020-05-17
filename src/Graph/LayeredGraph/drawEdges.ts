@@ -49,7 +49,6 @@ export const drawEdges = (
     const paddingRight: number = 20;
 
     maxX = Math.max(maxX + paddingRight, scene.scrollWidth);
-    console.log(maxX + paddingRight, scene.scrollWidth)
 
     // const layer = scene.firstElementChild;
     const svg = d3.select(scene).append('svg').attr('width', maxX).attr('height', scene.scrollHeight);
