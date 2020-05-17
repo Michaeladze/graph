@@ -65,10 +65,10 @@ const Graph: React.FC<IProps> = ({ data }) => {
   };
 
   const onMouseMove = (e: React.MouseEvent | MouseEvent) => {
-    if (draggingNode.current && dragging.current && graph) {
+    if (draggingNode.current && dragging.current && graph && scene.current) {
       e.stopPropagation();
-      const x = e.clientX - draggingNode.current.offsetWidth / 2 - currentCoords.current.left;
-      const y = e.clientY - draggingNode.current.offsetHeight / 2 - currentCoords.current.top;
+      const x = e.clientX - draggingStartCoordinates.current[0] - currentCoords.current.left + scene.current.scrollLeft;
+      const y = e.clientY - draggingStartCoordinates.current[1] - currentCoords.current.top + scene.current.scrollTop;
       draggingNode.current.style.transform = `translate(${x}px, ${y}px)`;
       lines.current = graph.moveNode(draggingNode.current.id, x, y);
     }
