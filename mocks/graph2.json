@@ -1,0 +1,426 @@
+{
+  "nodes": [
+    { "name": "[START]", "type": "start" },
+    { "name": "[END]", "type": "end" },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<00000884> THR<00000af0>",
+      "metrics": { "count": 2, "cycling": 0.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<00000920> THR<00003090>",
+      "metrics": { "count": 4, "cycling": 75.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<00003138> THR<00003594>",
+      "metrics": { "count": 4, "cycling": 75.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<000037f4> THR<00001748>",
+      "metrics": { "count": 4, "cycling": 75.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\scs\\atm_h\\atm_h.exe> PROCESS<00001094> THR<00001044>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\scs\\atm_h\\atm_web.exe> PROCESS<000013fc> THR<00001408>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\Windows\\system32\\wbem\\wmiprvse.exe> PROCESS<0000060c> THR<000010dc>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\scs\\atm_h\\atm_h.exe> PROCESS<00001094> THR<00001044>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\scs\\atm_h\\atm_web.exe> PROCESS<000013fc> THR<00001408>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    { "name": "zcallcmd.exe:CMD<EXIT>", "metrics": { "count": 2, "cycling": 50.0 } },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<000010e0> THR<0000198c>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<00000920> THR<00003090>",
+      "metrics": { "count": 4, "cycling": 75.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<00003138> THR<00003594>",
+      "metrics": { "count": 4, "cycling": 75.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<000037f4> THR<00001748>",
+      "metrics": { "count": 4, "cycling": 75.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\AgentSMUS\\XfsGateApp.exe> PROCESS<00000884> THR<00000af0>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\SCS\\ATM_H\\haspupdater.exe> PROCESS<000013e0> THR<000013e4>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\SCS\\ATM_H\\haspupdater.exe> PROCESS<000013e0> THR<000013e4>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\SCS\\ATM_H\\haspupdater.exe> PROCESS<00000bb0> THR<0000108c>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\SCS\\ATM_H\\haspupdater.exe> PROCESS<00000bb0> THR<0000108c>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\SCS\\ATM_H\\haspupdater.exe> PROCESS<00000f5c> THR<00000d44>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogStop: EXE<C:\\SCS\\ATM_H\\haspupdater.exe> PROCESS<00000f5c> THR<00000d44>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\scs\\atm_h\\atm_h.exe> PROCESS<000011ec> THR<000011f4>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\scs\\atm_h\\atm_web.exe> PROCESS<000009d0> THR<000012d0>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    },
+    {
+      "name": "scslog.dll:LogOpen: EXE<C:\\Windows\\system32\\wbem\\wmiprvse.exe> PROCESS<0000060c> THR<000010dc>",
+      "metrics": { "count": 2, "cycling": 50.0 }
+    }
+  ],
+  "edges": [
+    { "from": 0, "to": 2 },
+    { "from": 0, "to": 3 },
+    { "from": 0, "to": 4 },
+    { "from": 0, "to": 5 },
+    { "from": 0, "to": 6 },
+    { "from": 0, "to": 7 },
+    { "from": 0, "to": 8 },
+    { "from": 0, "to": 9 },
+    { "from": 0, "to": 10 },
+    { "from": 0, "to": 11 },
+    { "from": 2, "to": 1 },
+    { "from": 12, "to": 1 },
+    { "from": 7, "to": 1 },
+    { "from": 13, "to": 1 },
+    { "from": 14, "to": 1 },
+    { "from": 15, "to": 1 },
+    { "from": 8, "to": 1 },
+    { "from": 9, "to": 1 },
+    { "from": 10, "to": 1 },
+    { "from": 11, "to": 1 },
+    {
+      "from": 7,
+      "to": 7,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 9,
+      "to": 9,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 5,
+      "to": 15,
+      "metrics": {
+        "count": 4,
+        "percent": 100.0,
+        "cycling": 92.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 15,
+      "to": 5,
+      "metrics": {
+        "count": 3,
+        "percent": 100.0,
+        "cycling": 94.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 10,
+      "to": 10,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 6,
+      "metrics": {
+        "count": 1,
+        "percent": 50.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 16,
+      "metrics": {
+        "count": 1,
+        "percent": 50.0,
+        "cycling": 98.0,
+        "time": { "min": 480, "max": 480, "mean": 480.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 16,
+      "to": 2,
+      "metrics": {
+        "count": 1,
+        "percent": 50.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 16,
+      "to": 17,
+      "metrics": {
+        "count": 1,
+        "percent": 50.0,
+        "cycling": 98.0,
+        "time": { "min": 60, "max": 60, "mean": 60.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 2,
+      "to": 16,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 17,
+      "to": 18,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 18,
+      "to": 19,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 19,
+      "to": 20,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 20,
+      "to": 21,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 21,
+      "to": 22,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 22,
+      "to": 23,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 23,
+      "to": 24,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 24,
+      "to": 25,
+      "metrics": {
+        "count": 2,
+        "percent": 100.0,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 25,
+      "to": 17,
+      "metrics": {
+        "count": 1,
+        "percent": 50.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 25,
+      "to": 12,
+      "metrics": {
+        "count": 1,
+        "percent": 50.0,
+        "cycling": 98.0,
+        "time": { "min": 120, "max": 120, "mean": 120.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 12,
+      "to": 12,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 8,
+      "to": 8,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 3,
+      "metrics": {
+        "count": 1,
+        "percent": 25.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 13,
+      "metrics": {
+        "count": 3,
+        "percent": 75.0,
+        "cycling": 94.0,
+        "time": { "min": 0, "max": 60, "mean": 20.0, "var": 800.0, "stdDev": 28.284 }
+      }
+    },
+    {
+      "from": 13,
+      "to": 3,
+      "metrics": {
+        "count": 2,
+        "percent": 66.666,
+        "cycling": 96.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 13,
+      "to": 13,
+      "metrics": {
+        "count": 1,
+        "percent": 33.333,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 4,
+      "to": 14,
+      "metrics": {
+        "count": 4,
+        "percent": 100.0,
+        "cycling": 92.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 14,
+      "to": 4,
+      "metrics": {
+        "count": 3,
+        "percent": 100.0,
+        "cycling": 94.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 11,
+      "to": 11,
+      "metrics": {
+        "count": 1,
+        "percent": 100.0,
+        "cycling": 98.0,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    }
+  ],
+  "paths": [
+    { "path": [7, 7], "count": 1 },
+    { "path": [9, 9], "count": 1 },
+    { "path": [10, 10], "count": 1 },
+    { "path": [8, 8], "count": 1 },
+    { "path": [11, 11], "count": 1 },
+    { "path": [2], "count": 1 },
+    { "path": [3, 3, 13, 3, 13, 13, 3, 13], "count": 1 },
+    {
+      "path": [6, 6, 16, 2, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 17, 18, 19, 20, 21, 22, 23, 24, 25, 12, 12],
+      "count": 1
+    },
+    { "path": [5, 15, 5, 15, 5, 15, 5, 15], "count": 1 },
+    { "path": [4, 14, 4, 14, 4, 14, 4, 14], "count": 1 }
+  ]
+}

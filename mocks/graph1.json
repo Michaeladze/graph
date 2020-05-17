@@ -1,0 +1,186 @@
+{
+  "nodes": [
+    { "name": "[START]", "type": "start" },
+    { "name": "[END]", "type": "end" },
+    { "name": "a", "metrics": { "count": 22, "cycling": 0.0 } },
+    { "name": "z", "metrics": { "count": 28, "cycling": 0.0 } },
+    { "name": "e", "metrics": { "count": 22, "cycling": 0.0 } },
+    { "name": "u", "metrics": { "count": 28, "cycling": 0.0 } },
+    { "name": "b", "metrics": { "count": 44, "cycling": 50.0 } },
+    { "name": "c", "metrics": { "count": 44, "cycling": 50.0 } },
+    { "name": "d", "metrics": { "count": 44, "cycling": 50.0 } },
+    { "name": "y", "metrics": { "count": 56, "cycling": 50.0 } },
+    { "name": "x", "metrics": { "count": 56, "cycling": 50.0 } },
+    { "name": "v", "metrics": { "count": 56, "cycling": 50.0 } }
+  ],
+  "edges": [
+    { "from": 0, "to": 2 },
+    { "from": 0, "to": 3 },
+    { "from": 4, "to": 1 },
+    { "from": 5, "to": 1 },
+    {
+      "from": 2,
+      "to": 6,
+      "metrics": {
+        "count": 22,
+        "percent": 100.0,
+        "cycling": 93.714,
+        "time": {
+          "min": 26652600,
+          "max": 185599860,
+          "mean": 1.0469994e8,
+          "var": 1.398931207194109e15,
+          "stdDev": 3.7402288796e7
+        }
+      }
+    },
+    {
+      "from": 6,
+      "to": 7,
+      "metrics": {
+        "count": 44,
+        "percent": 100.0,
+        "cycling": 87.428,
+        "time": {
+          "min": 15122460,
+          "max": 185328540,
+          "mean": 9.9169062272e7,
+          "var": 1.662842642090495e15,
+          "stdDev": 4.0777967606e7
+        }
+      }
+    },
+    {
+      "from": 7,
+      "to": 8,
+      "metrics": {
+        "count": 44,
+        "percent": 100.0,
+        "cycling": 87.428,
+        "time": {
+          "min": 20802840,
+          "max": 195007320,
+          "mean": 1.01121713181e8,
+          "var": 1.5845398466796352e15,
+          "stdDev": 3.9806278985e7
+        }
+      }
+    },
+    {
+      "from": 8,
+      "to": 6,
+      "metrics": {
+        "count": 22,
+        "percent": 50.0,
+        "cycling": 93.714,
+        "time": {
+          "min": 15526560,
+          "max": 191169540,
+          "mean": 9.6377541818e7,
+          "var": 1.6955465789034152e15,
+          "stdDev": 4.1177015177e7
+        }
+      }
+    },
+    {
+      "from": 8,
+      "to": 4,
+      "metrics": {
+        "count": 22,
+        "percent": 50.0,
+        "cycling": 93.714,
+        "time": {
+          "min": 682500,
+          "max": 154218900,
+          "mean": 8.7809896363e7,
+          "var": 1.584700255759805e15,
+          "stdDev": 3.9808293806e7
+        }
+      }
+    },
+    {
+      "from": 3,
+      "to": 9,
+      "metrics": {
+        "count": 28,
+        "percent": 100.0,
+        "cycling": 92.0,
+        "time": {
+          "min": 31965660,
+          "max": 184045440,
+          "mean": 1.14085247142e8,
+          "var": 1.4215284338238918e15,
+          "stdDev": 3.7703162119e7
+        }
+      }
+    },
+    {
+      "from": 9,
+      "to": 10,
+      "metrics": {
+        "count": 56,
+        "percent": 100.0,
+        "cycling": 84.0,
+        "time": {
+          "min": 13637400,
+          "max": 182787660,
+          "mean": 9.4298041071e7,
+          "var": 1.9141701139678482e15,
+          "stdDev": 4.3751229856e7
+        }
+      }
+    },
+    {
+      "from": 10,
+      "to": 11,
+      "metrics": {
+        "count": 56,
+        "percent": 100.0,
+        "cycling": 84.0,
+        "time": {
+          "min": 18649020,
+          "max": 181872540,
+          "mean": 1.05279632142e8,
+          "var": 2.0383674690027812e15,
+          "stdDev": 4.5148283123e7
+        }
+      }
+    },
+    {
+      "from": 11,
+      "to": 9,
+      "metrics": {
+        "count": 28,
+        "percent": 50.0,
+        "cycling": 92.0,
+        "time": {
+          "min": 22121040,
+          "max": 196587960,
+          "mean": 1.03769918571e8,
+          "var": 2.0793806382127408e15,
+          "stdDev": 4.5600226295e7
+        }
+      }
+    },
+    {
+      "from": 11,
+      "to": 5,
+      "metrics": {
+        "count": 28,
+        "percent": 50.0,
+        "cycling": 92.0,
+        "time": {
+          "min": 4399500,
+          "max": 190886160,
+          "mean": 8.838333e7,
+          "var": 2.0687376220985572e15,
+          "stdDev": 4.5483377426e7
+        }
+      }
+    }
+  ],
+  "paths": [
+    { "path": [3, 9, 10, 11, 9, 10, 11, 5], "count": 28 },
+    { "path": [2, 6, 7, 8, 6, 7, 8, 4], "count": 22 }
+  ]
+}

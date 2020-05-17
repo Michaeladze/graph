@@ -1,0 +1,589 @@
+{
+  "nodes": [
+    { "name": "[START]", "type": "start" },
+    { "name": "[END]", "type": "end" },
+    { "name": "Change Approval for Purchase Order", "metrics": { "count": 8, "cycling": 0.0 } },
+    { "name": "Create Purchase Order Item", "metrics": { "count": 518, "cycling": 0.0 } },
+    { "name": "Create Purchase Requisition Item", "metrics": { "count": 6, "cycling": 0.0 } },
+    { "name": "Receive Order Confirmation", "metrics": { "count": 46, "cycling": 0.0 } },
+    { "name": "Record Goods Receipt", "metrics": { "count": 115, "cycling": 74.782 } },
+    { "name": "Record Service Entry Sheet", "metrics": { "count": 145, "cycling": 93.793 } },
+    { "name": "Vendor creates debit memo", "metrics": { "count": 7, "cycling": 14.285 } },
+    { "name": "Vendor creates invoice", "metrics": { "count": 134, "cycling": 5.97 } },
+    { "name": "Cancel Goods Receipt", "metrics": { "count": 2, "cycling": 0.0 } },
+    { "name": "Change Price", "metrics": { "count": 2, "cycling": 0.0 } },
+    { "name": "Change Quantity", "metrics": { "count": 9, "cycling": 0.0 } },
+    { "name": "Delete Purchase Order Item", "metrics": { "count": 5, "cycling": 0.0 } },
+    { "name": "Record Invoice Receipt", "metrics": { "count": 2, "cycling": 0.0 } },
+    { "name": "Update Order Confirmation", "metrics": { "count": 1, "cycling": 0.0 } }
+  ],
+  "edges": [
+    { "from": 0, "to": 2 },
+    { "from": 0, "to": 3 },
+    { "from": 0, "to": 4 },
+    { "from": 0, "to": 5 },
+    { "from": 0, "to": 6 },
+    { "from": 0, "to": 7 },
+    { "from": 0, "to": 8 },
+    { "from": 0, "to": 9 },
+    { "from": 10, "to": 1 },
+    { "from": 2, "to": 1 },
+    { "from": 11, "to": 1 },
+    { "from": 12, "to": 1 },
+    { "from": 3, "to": 1 },
+    { "from": 4, "to": 1 },
+    { "from": 13, "to": 1 },
+    { "from": 5, "to": 1 },
+    { "from": 6, "to": 1 },
+    { "from": 14, "to": 1 },
+    { "from": 7, "to": 1 },
+    { "from": 15, "to": 1 },
+    { "from": 8, "to": 1 },
+    { "from": 9, "to": 1 },
+    {
+      "from": 9,
+      "to": 9,
+      "metrics": {
+        "count": 7,
+        "percent": 31.818,
+        "cycling": 98.275,
+        "time": {
+          "min": 432000,
+          "max": 4492800,
+          "mean": 2283428.571,
+          "var": 1.565204062040816e12,
+          "stdDev": 1251081.157
+        }
+      }
+    },
+    {
+      "from": 9,
+      "to": 8,
+      "metrics": {
+        "count": 2,
+        "percent": 9.09,
+        "cycling": 99.507,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 9,
+      "to": 3,
+      "metrics": {
+        "count": 10,
+        "percent": 45.454,
+        "cycling": 97.536,
+        "time": {
+          "min": 2910960,
+          "max": 28888020,
+          "mean": 1.3905276e7,
+          "var": 9.9737483970384e13,
+          "stdDev": 9986865.572
+        }
+      }
+    },
+    {
+      "from": 9,
+      "to": 6,
+      "metrics": {
+        "count": 3,
+        "percent": 13.636,
+        "cycling": 99.261,
+        "time": { "min": 2360820, "max": 2395920, "mean": 2384220.0, "var": 2.7378e8, "stdDev": 16546.298 }
+      }
+    },
+    {
+      "from": 8,
+      "to": 9,
+      "metrics": {
+        "count": 4,
+        "percent": 80.0,
+        "cycling": 99.014,
+        "time": {
+          "min": 0,
+          "max": 497581200,
+          "mean": 1.263609e8,
+          "var": 9.223372036854776e15,
+          "stdDev": 2.1434817455e8
+        }
+      }
+    },
+    {
+      "from": 8,
+      "to": 3,
+      "metrics": {
+        "count": 1,
+        "percent": 20.0,
+        "cycling": 99.753,
+        "time": { "min": 539616960, "max": 539616960, "mean": 5.3961696e8, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 9,
+      "metrics": {
+        "count": 42,
+        "percent": 34.71,
+        "cycling": 89.655,
+        "time": {
+          "min": 31560,
+          "max": 5150700,
+          "mean": 2810185.714,
+          "var": 3.507804836595918e12,
+          "stdDev": 1872913.462
+        }
+      }
+    },
+    {
+      "from": 3,
+      "to": 6,
+      "metrics": {
+        "count": 10,
+        "percent": 8.264,
+        "cycling": 97.536,
+        "time": { "min": 0, "max": 2392740, "mean": 244230.0, "var": 5.1295225338e11, "stdDev": 716206.85 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 5,
+      "metrics": {
+        "count": 43,
+        "percent": 35.537,
+        "cycling": 89.408,
+        "time": { "min": 0, "max": 2704920, "mean": 299494.883, "var": 6.53844611927311e11, "stdDev": 808606.586 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 12,
+      "metrics": {
+        "count": 9,
+        "percent": 7.438,
+        "cycling": 97.783,
+        "time": {
+          "min": 10140,
+          "max": 5101560,
+          "mean": 2515166.666,
+          "var": 1.450254183288889e12,
+          "stdDev": 1204264.997
+        }
+      }
+    },
+    {
+      "from": 3,
+      "to": 13,
+      "metrics": {
+        "count": 5,
+        "percent": 4.132,
+        "cycling": 98.768,
+        "time": { "min": 360, "max": 5111280, "mean": 1560612.0, "var": 4.237500208896e12, "stdDev": 2058518.935 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 11,
+      "metrics": {
+        "count": 2,
+        "percent": 1.652,
+        "cycling": 99.507,
+        "time": { "min": 2402400, "max": 2407740, "mean": 2405070.0, "var": 7128900.0, "stdDev": 2670.0 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 7,
+      "metrics": {
+        "count": 4,
+        "percent": 3.305,
+        "cycling": 99.014,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 2,
+      "metrics": {
+        "count": 4,
+        "percent": 3.305,
+        "cycling": 99.014,
+        "time": { "min": 660, "max": 660, "mean": 660.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 3,
+      "to": 10,
+      "metrics": {
+        "count": 2,
+        "percent": 1.652,
+        "cycling": 99.507,
+        "time": { "min": 7260, "max": 7260, "mean": 7260.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 9,
+      "metrics": {
+        "count": 4,
+        "percent": 4.166,
+        "cycling": 99.014,
+        "time": { "min": 31560, "max": 46200, "mean": 40650.0, "var": 3.68433e7, "stdDev": 6069.868 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 3,
+      "metrics": {
+        "count": 3,
+        "percent": 3.125,
+        "cycling": 99.261,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 6,
+      "metrics": {
+        "count": 70,
+        "percent": 72.916,
+        "cycling": 82.758,
+        "time": { "min": 0, "max": 60, "mean": 0.857, "var": 50.693, "stdDev": 7.119 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 14,
+      "metrics": {
+        "count": 2,
+        "percent": 2.083,
+        "cycling": 99.507,
+        "time": { "min": 2665200, "max": 2665200, "mean": 2665200.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 6,
+      "to": 7,
+      "metrics": {
+        "count": 17,
+        "percent": 17.708,
+        "cycling": 95.812,
+        "time": { "min": 0, "max": 60, "mean": 10.588, "var": 523.183, "stdDev": 22.873 }
+      }
+    },
+    {
+      "from": 4,
+      "to": 3,
+      "metrics": {
+        "count": 5,
+        "percent": 100.0,
+        "cycling": 98.768,
+        "time": { "min": 47040, "max": 5236920, "mean": 1087752.0, "var": 4.303903535136e12, "stdDev": 2074585.147 }
+      }
+    },
+    {
+      "from": 5,
+      "to": 3,
+      "metrics": {
+        "count": 3,
+        "percent": 20.0,
+        "cycling": 99.261,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 5,
+      "to": 6,
+      "metrics": {
+        "count": 11,
+        "percent": 73.333,
+        "cycling": 97.29,
+        "time": {
+          "min": 2703480,
+          "max": 5104740,
+          "mean": 3357387.272,
+          "var": 1.138921978492562e12,
+          "stdDev": 1067202.875
+        }
+      }
+    },
+    {
+      "from": 5,
+      "to": 15,
+      "metrics": {
+        "count": 1,
+        "percent": 6.666,
+        "cycling": 99.753,
+        "time": { "min": 5093520, "max": 5093520, "mean": 5093520.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 7,
+      "to": 3,
+      "metrics": {
+        "count": 2,
+        "percent": 1.408,
+        "cycling": 99.507,
+        "time": { "min": 0, "max": 0, "mean": 0.0, "var": 0.0, "stdDev": 0.0 }
+      }
+    },
+    {
+      "from": 7,
+      "to": 6,
+      "metrics": {
+        "count": 18,
+        "percent": 12.676,
+        "cycling": 95.566,
+        "time": { "min": 0, "max": 60, "mean": 6.666, "var": 355.555, "stdDev": 18.856 }
+      }
+    },
+    {
+      "from": 7,
+      "to": 7,
+      "metrics": {
+        "count": 122,
+        "percent": 85.915,
+        "cycling": 69.95,
+        "time": { "min": 0, "max": 120, "mean": 2.459, "var": 200.51, "stdDev": 14.16 }
+      }
+    }
+  ],
+  "paths": [
+    { "path": [3], "count": 379 },
+    { "path": [9], "count": 64 },
+    { "path": [3, 9], "count": 39 },
+    { "path": [3, 5], "count": 31 },
+    { "path": [9, 3], "count": 8 },
+    { "path": [3, 12], "count": 8 },
+    { "path": [3, 5, 6], "count": 8 },
+    { "path": [3, 13], "count": 5 },
+    { "path": [3, 6], "count": 4 },
+    { "path": [3, 2], "count": 4 },
+    { "path": [2], "count": 4 },
+    { "path": [4, 3], "count": 4 },
+    { "path": [5, 3], "count": 3 },
+    { "path": [3, 5, 6, 9], "count": 3 },
+    { "path": [3, 11], "count": 2 },
+    { "path": [3, 10], "count": 2 },
+    { "path": [8, 9], "count": 2 },
+    { "path": [3, 9, 6, 14], "count": 2 },
+    { "path": [9, 9], "count": 1 },
+    { "path": [3, 6, 7, 7, 7, 7, 7, 7, 7, 6], "count": 1 },
+    { "path": [9, 8], "count": 1 },
+    { "path": [3, 5, 15], "count": 1 },
+    { "path": [9, 9, 9, 9], "count": 1 },
+    { "path": [3, 7, 7, 7, 6], "count": 1 },
+    {
+      "path": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        3,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "count": 1
+    },
+    { "path": [9, 9, 9, 9, 3], "count": 1 },
+    { "path": [7, 7, 7, 7, 3, 6, 6, 6], "count": 1 },
+    {
+      "path": [
+        6,
+        3,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        7,
+        6,
+        7,
+        6,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        7,
+        7,
+        7,
+        7,
+        7,
+        6,
+        6,
+        6,
+        6
+      ],
+      "count": 1
+    },
+    { "path": [6, 3, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7], "count": 1 },
+    { "path": [8], "count": 1 },
+    { "path": [9, 3, 6], "count": 1 },
+    { "path": [3, 7, 7, 7, 7, 7, 6, 7, 7, 7, 7], "count": 1 },
+    { "path": [8, 3], "count": 1 },
+    { "path": [4], "count": 1 },
+    { "path": [3, 9, 6], "count": 1 },
+    { "path": [4, 3, 12], "count": 1 },
+    { "path": [8, 9, 8, 9], "count": 1 },
+    { "path": [6, 7, 7, 7, 7, 7, 7, 3], "count": 1 },
+    { "path": [3, 6, 9], "count": 1 },
+    { "path": [3, 7, 7, 6, 7], "count": 1 }
+  ]
+}
