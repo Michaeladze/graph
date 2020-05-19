@@ -32,7 +32,21 @@
     left: 0;
 }
 
+// ----------- Metrics ---------
+
+.scene__metrics {
+    width: 100%;
+    height: 100%;
+}
+
 .graph__edge-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -6px;
+    left: 3px;
+
     font-size: 8px;
     color: #2b3448;
     fill: #2b3448;

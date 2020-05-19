@@ -10,7 +10,31 @@ export const fillGaps = (graph: IGraph, median: number = 0): IMatrix => {
     /** Очередь */
     let undefinedQueue: number[] = [];
 
+    /** Правая сторона */
     for (let j: number = median; j < matrix[i].length; j++) {
+      if (matrix[i][j] === undefined) {
+        /** Запоминаем пустую ячейку */
+        undefinedQueue.push(j);
+      } else {
+        if (graph[matrix[i][j] as number].fake) {
+          continue;
+        }
+
+        const c: number | undefined = undefinedQueue.shift();
+        if (c) {
+          /** Вставляем узел в первую доступную пустую ячейку */
+          graph[matrix[i][j] as number].x = c;
+          matrix[i][c] = matrix[1][j];
+          matrix[i][j] = undefined;
+          undefinedQueue.push(j);
+        }
+      }
+    }
+
+    undefinedQueue = [];
+
+    /** Левая сторона */
+    for (let j: number = median - 1; j >= 0; j--) {
       if (matrix[i][j] === undefined) {
         /** Запоминаем пустую ячейку */
         undefinedQueue.push(j);

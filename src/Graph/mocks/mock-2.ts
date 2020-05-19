@@ -3,47 +3,47 @@ export default {
     { name: '[START]', type: 'start' },
     { name: '[END]', type: 'end' },
     {
-      name: 'ОТПРАВЛЕНО В БАНК',
+      name: 'a',
       metrics: { count: 12558, cycling: 25.832, queue: null }
     },
     {
-      name: 'ОТПРАВЛЕНО В МИДДЛ',
+      name: 'b',
       metrics: { count: 19134, cycling: 53.961, queue: null }
     },
-    { name: 'ЧЕРНОВИК', metrics: { count: 8039, cycling: 0.0, queue: null } },
+    { name: 'd', metrics: { count: 8039, cycling: 0.0, queue: null } },
     {
-      name: 'КРЕДИТ ОДОБРЕН',
+      name: 'e',
       metrics: { count: 6222, cycling: 0.0, queue: null }
     },
     {
-      name: 'Назначена на вторую линию',
+      name: 'f',
       metrics: { count: 7, cycling: 0.0, queue: null }
     },
     {
-      name: 'ОТКАЗ БАНКА ПО ЗАЕМЩИКУ',
+      name: 'g',
       metrics: { count: 3007, cycling: 0.0, queue: null }
     },
     {
-      name: 'ОТКАЗ КЛИЕНТА',
+      name: 'l',
       metrics: { count: 85, cycling: 0.0, queue: null }
     },
     {
-      name: 'ПРОВЕРКА В МИДДЛ',
+      name: 'h',
       metrics: { count: 19130, cycling: 53.951, queue: null }
     },
     {
-      name: 'ВОЗВРАТ КЛИЕНТУ',
+      name: 'i',
       metrics: { count: 7659, cycling: 44.679, queue: null }
     },
     {
-      name: 'ПРИНЯТО В РАБОТУ ЦОПП',
+      name: 'c',
       metrics: { count: 12558, cycling: 25.832, queue: null }
     },
     {
-      name: 'КРЕДИТНЫЙ АНАЛИЗ',
+      name: 'j',
       metrics: { count: 10644, cycling: 14.167, queue: null }
     },
-    { name: 'ВОЗВРАТ НА ДОРАБОТКУ', metrics: { count: 957, cycling: 58.411, queue: null } }
+    { name: 'k', metrics: { count: 957, cycling: 58.411, queue: null } }
   ],
   edges: [
     { from: 0, to: 2 },

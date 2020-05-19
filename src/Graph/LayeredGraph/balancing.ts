@@ -208,17 +208,19 @@ function shiftToLeft(
 
     /** Если это реальный узел, стараемся прижать его к процессу. Иначе перекидываем диаметрально относительно медианы.
      * Это нужно для того, чтобы граф не растягивался в ширину. */
-    if (!graph[node].fake) {
-      for (let i: number = ptm.median - 1; i >= 0; i--) {
-        if (ptm.matrix[graph[node].y][i] === undefined) {
-          graph[node].x = i;
-          ptm.matrix = rearrangeMatrix(graph);
-          break;
-        }
-      }
-    } else {
-      graph[node].x = ptm.median - (graph[node].x - ptm.median);
-    }
+    // if (!graph[node].fake) {
+    //   for (let i: number = ptm.median - 1; i >= 0; i--) {
+    //     if (ptm.matrix[graph[node].y][i] === undefined) {
+    //       graph[node].x = i;
+    //       ptm.matrix = rearrangeMatrix(graph);
+    //       break;
+    //     }
+    //   }
+    // } else {
+    //   graph[node].x = ptm.median - (graph[node].x - ptm.median);
+    // }
+
+    graph[node].x = ptm.median - (graph[node].x - ptm.median);
 
     shifted = true;
     processedNodes[node] = true;

@@ -1,17 +1,17 @@
 export default {
   nodes: [
-    { name: 'ЧЕРНОВИК', metrics: { count: 160780, cycling: 0.0, queue: null } },
-    { name: 'ОТПРАВЛЕНО В МИДДЛ', metrics: { count: 382680, cycling: 53.961, queue: null } },
-    { name: 'ОТПРАВЛЕНО В БАНК', metrics: { count: 251160, cycling: 25.832, queue: null } },
-    { name: 'ПРОВЕРКА В МИДДЛ', metrics: { count: 382600, cycling: 53.951, queue: null } },
-    { name: 'ВОЗВРАТ КЛИЕНТУ', metrics: { count: 153180, cycling: 44.679, queue: null } },
-    { name: 'ПРИНЯТО В РАБОТУ ЦОПП', metrics: { count: 251160, cycling: 25.832, queue: null } },
-    { name: 'КРЕДИТНЫЙ АНАЛИЗ', metrics: { count: 212880, cycling: 14.167, queue: null } },
-    { name: 'ОТКАЗ БАНКА ПО ЗАЕМЩИКУ', metrics: { count: 60140, cycling: 0.0, queue: null } },
-    { name: 'ВОЗВРАТ НА ДОРАБОТКУ', metrics: { count: 19140, cycling: 58.411, queue: null } },
-    { name: 'КРЕДИТ ОДОБРЕН', metrics: { count: 124440, cycling: 0.0, queue: null } },
-    { name: 'ОТКАЗ КЛИЕНТА', metrics: { count: 1700, cycling: 0.0, queue: null } },
-    { name: 'Назначена на вторую линию', metrics: { count: 140, cycling: 0.0, queue: null } },
+    { name: 'a', metrics: { count: 160780, cycling: 0.0, queue: null } },
+    { name: 'b', metrics: { count: 382680, cycling: 53.961, queue: null } },
+    { name: 'c', metrics: { count: 251160, cycling: 25.832, queue: null } },
+    { name: 'd', metrics: { count: 382600, cycling: 53.951, queue: null } },
+    { name: 'e', metrics: { count: 153180, cycling: 44.679, queue: null } },
+    { name: 'f', metrics: { count: 251160, cycling: 25.832, queue: null } },
+    { name: 'g', metrics: { count: 212880, cycling: 14.167, queue: null } },
+    { name: 'h', metrics: { count: 60140, cycling: 0.0, queue: null } },
+    { name: 'i', metrics: { count: 19140, cycling: 58.411, queue: null } },
+    { name: 'j', metrics: { count: 124440, cycling: 0.0, queue: null } },
+    { name: 'k', metrics: { count: 1700, cycling: 0.0, queue: null } },
+    { name: 'l', metrics: { count: 140, cycling: 0.0, queue: null } },
     { name: '[START]', type: 'start' },
     { name: '[END]', type: 'end' }
   ],
@@ -87,6 +87,22 @@ export default {
         count: 223460,
         percent: 58.405,
         cycling: 87.679,
+        time: {
+          min: 0,
+          max: 594000,
+          mean: 4962.686,
+          var: 1.39748195304e8,
+          stdDev: 11821.514
+        }
+      }
+    },
+    {
+      from: 3,
+      to: 3,
+      metrics: {
+        count: 130,
+        percent: 58.405,
+        cycling: 0.679,
         time: {
           min: 0,
           max: 594000,

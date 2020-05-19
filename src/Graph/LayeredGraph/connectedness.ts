@@ -3,8 +3,9 @@ import { IGraph, INumberMap } from './interfaces/interfaces';
 /** Расставляем processSibling у узлов. 0 - процесс. Чем больше значение, тем дальше от процесса находится узел
  * @param process - последовательность узлов
  * @param graph - граф
+ * @param end - конечный узел
  * */
-export const connectedness = (process: IGraph, graph: IGraph) => {
+export const connectedness = (process: IGraph, graph: IGraph, end: number) => {
   const visited: INumberMap<INumberMap<boolean>> = {};
 
   const dfs = (node: number, parent: number | null) => {
@@ -15,7 +16,7 @@ export const connectedness = (process: IGraph, graph: IGraph) => {
     if (parent !== null) {
       visited[node][parent] = true;
 
-      if (process[node] && !process[parent]) {
+      if (process[node] && !process[parent] && node !== end) {
         graph[parent].processSibling = 1;
       }
 

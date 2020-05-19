@@ -99,7 +99,7 @@ export class LayeredGraph {
     this.edges = [...this.data.edges];
 
     /** [3] Распределяем узлы по вертикали */
-    this.matrix = ranking(this.data, this.graph, this.process);
+    this.matrix = ranking(this.data, this.graph, this.process, this.end);
 
     /** [4] Распределяем узлы по горизонтали */
     this.matrix = ordering(this.graph, this.matrix, this.end);
@@ -113,9 +113,6 @@ export class LayeredGraph {
     const balance: IBalanceResult = balancing(this.process, this.graph, this.matrix);
     this.median = balance.median;
     this.matrix = balance.matrix;
-
-    /** [7] Уменьшаем количество пересечений */
-    // this.matrix = crossingMinimization(this.graph, this.matrix, this.median);
 
     /** [8] Убираем гэпы */
     const tfn = translateFakeNodes(this.graph, this.median, this.rect, this.pathMap);

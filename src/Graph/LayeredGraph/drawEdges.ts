@@ -33,11 +33,11 @@ export const drawEdges = (
   const lines: ILines = {};
 
   if (scene) {
-    /** Ищем на сцене svg и удаляем его, чтобы при повторном рендере svg не наложились друг на друга */
+    /** Ищем на сцене svg и метрики и удаляем его, чтобы при повторном рендере svg не наложились друг на друга */
     const svgElement = scene.querySelector('svg');
-    if (svgElement) {
-      scene.removeChild(svgElement);
-    }
+    const metricsElement = scene.querySelector('.scene__metrics');
+    svgElement && scene.removeChild(svgElement);
+    metricsElement && scene.removeChild(metricsElement);
 
     /** Определяем максимальную координату X для определения ширины сцены */
     let maxX: number = Number.MIN_SAFE_INTEGER;
@@ -121,7 +121,7 @@ export const drawEdges = (
     createMarker(svg, config.colors.disabled, config.markers.disabled);
     createMarker(svg, config.colors.hover, config.markers.hover);
     /** Вставляем метрики */
-    insertMetrics(metricsCoords, edges, svg);
+    insertMetrics(metricsCoords, edges, scene);
   }
 
   return lines;
@@ -145,10 +145,32 @@ function getCoords(graph: IGraph, pathMap: IPathMap, edges: IEdge[], rect: IRect
     let metricInserted: boolean = false;
 
     for (let i: number = 0; i < paths.length; i++) {
-      if (paths[i] === +from || paths[i] === +to) {
+      const curr: number = paths[i];
+
+      /** From Node */
+      const fn: IGraphNode = graph[+from];
+      /** To Node */
+      const tn: IGraphNode = graph[+to];
+      /** Current Node */
+      const cn: IGraphNode = graph[curr];
+
+      if (curr === +from || curr === +to) {
         continue;
       }
-      const c: [number, number] = calculateCoords(graph[paths[i]]);
+
+      /** Условие, при котором при движении узла промежуточные виртуальные узлы будут исключаться, чтобы
+       * не было острых углов и загибов ребер */
+      const bendCondition: boolean =
+        (cn.css.translate.y < fn.css.translate.y && cn.y > fn.y) ||
+        (cn.css.translate.y > fn.css.translate.y && cn.y < fn.y) ||
+        (cn.css.translate.y - rect.height < tn.css.translate.y && cn.y > tn.y) ||
+        (cn.css.translate.y + rect.height > tn.css.translate.y && cn.y < tn.y);
+
+      if (bendCondition) {
+        continue;
+      }
+
+      const c: [number, number] = calculateCoords(cn);
       if (!metricInserted) {
         metricsCoords.push([c[0], c[1], +from, +to]);
         metricInserted = true;
@@ -159,7 +181,8 @@ function getCoords(graph: IGraph, pathMap: IPathMap, edges: IEdge[], rect: IRect
     coords[key].push(calculateCoords(graph[+to]));
   }
 
-  /** Обработка коротких путей между реальными узлами */
+  /** Обработка коротких путей между реальными узлами. Обрабатывается отдельно, потому что в путях нет
+   * коротких ребер. */
   edges.forEach((edge: IEdge) => {
     const id: string = `${edge.from}=>${edge.to}`;
     /** Если есть обратный id, это значит, что ребра наложатся друг на друга. Следовательно,\
@@ -261,7 +284,11 @@ function createMarker(svg: any, color: string, id: string) {
 }
 
 /** Вставляем метрики */
-function insertMetrics(metricsCoords: FourNumber[], edges: IEdge[], svg: any) {
+function insertMetrics(metricsCoords: FourNumber[], edges: IEdge[], scene: HTMLDivElement) {
+  /** Создаем блок с метриками */
+  const metricsElement: HTMLDivElement = document.createElement('div');
+  metricsElement.classList.add('scene__metrics');
+
   /** Таблица для O(1) поиска */
   const map: IMap<number> = edges.reduce((acc: IMap<number>, edge: IEdge, i: number) => {
     const id: string = `${edge.from}=>${edge.to}`;
@@ -276,17 +303,30 @@ function insertMetrics(metricsCoords: FourNumber[], edges: IEdge[], svg: any) {
     const index: number = map[`${m[2]}=>${m[3]}`]; // edges.findIndex((e: IEdge) => e.from === m[2] && e.to === m[3]);
     const count: number | undefined = edges[index].metrics ? +(edges[index].metrics as INodeMetrics).count : undefined;
 
-    svg
-      .append('text')
-      .attr(
-        'class',
-        `graph__edge-count 
-      ${edges[index].status && edges[index].status === 'disabled' ? 'graph__edge-count--disabled' : ''}`
-      )
-      .attr('x', m[0] + 2) // + 2px, чтобы не налезало на линию
-      .attr('y', m[1])
-      .text(count);
+    if (count) {
+      const disabledClass: string =
+        edges[index].status && edges[index].status === 'disabled' ? 'graph__edge-count--disabled' : '';
+
+      const p: HTMLParagraphElement = document.createElement('p');
+      p.classList.add('graph__edge-count');
+      disabledClass && p.classList.add(disabledClass);
+      p.textContent = `${count}`;
+      p.style.transform = `translate(${m[0]}px, ${m[1]}px)`;
+      metricsElement.appendChild(p);
+    }
+    // svg
+    //   .append('text')
+    //   .attr(
+    //     'class',
+    //     `graph__edge-count
+    //   ${edges[index].status && edges[index].status === 'disabled' ? 'graph__edge-count--disabled' : ''}`
+    //   )
+    //   .attr('x', m[0] + 2) // + 2px, чтобы не налезало на линию
+    //   .attr('y', m[1])
+    //   .text(count);
   });
+
+  scene.appendChild(metricsElement);
 }
 
 /** Отрисовка линии */

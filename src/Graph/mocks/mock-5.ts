@@ -1,14 +1,14 @@
 export default {
   nodes: [
     { name: '[START]', type: 'start' },
-    { name: 'Узел 1' },
-    { name: 'Узел 2' },
-    { name: 'Узел 3' },
-    { name: 'Узел 4' },
-    { name: 'Узел 5' },
-    { name: 'Узел 6' },
-    { name: 'Узел 7' },
-    { name: 'Узел 8' },
+    { name: 'Node 1' },
+    { name: 'Node 2' },
+    { name: 'Node 3' },
+    { name: 'Node 4' },
+    { name: 'Node 5' },
+    { name: 'Node 6' },
+    { name: 'Node 7' },
+    { name: 'Node 8' },
     { name: '[END]', type: 'end' }
   ],
   edges: [

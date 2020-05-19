@@ -1,6 +1,4 @@
-import {
-  IGraph, IGraphData, INode, INodeElement, INodeMetrics, IRect 
-} from './interfaces/interfaces';
+import { IGraph, IGraphData, INode, INodeElement, INodeMetrics, IRect } from './interfaces/interfaces';
 
 /** Создаем массив узлов с координатами
  * @param graph - граф
@@ -18,7 +16,16 @@ export const createNodes = (graph: IGraph, data: IGraphData, rect: IRect): INode
   c.sort();
   const mCycling: number = c[Math.floor(c.length / 2)];
 
-  return Object.keys(graph).map((n: string) => {
+  const keys: string[] = Object.keys(graph);
+
+  // /** Gap в зависимости от среднего количества родственников */
+  // let avgRelativesCount: number = 0;
+  // keys.forEach((n: string) => {
+  //   avgRelativesCount += [...graph[+n].children, ...graph[+n].parents].length;
+  // })
+  // avgRelativesCount = Math.floor(avgRelativesCount / keys.length);
+
+  return keys.map((n: string) => {
     graph[+n].css = {
       width: graph[+n].css.width || rect.width,
       height: graph[+n].css.height || rect.height,

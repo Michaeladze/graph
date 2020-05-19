@@ -67,8 +67,8 @@ const Graph: React.FC<IProps> = ({ data }) => {
   const onMouseMove = (e: React.MouseEvent | MouseEvent) => {
     if (draggingNode.current && dragging.current && graph && scene.current) {
       e.stopPropagation();
-      const x = e.clientX - draggingStartCoordinates.current[0] - currentCoords.current.left + scene.current.scrollLeft;
-      const y = e.clientY - draggingStartCoordinates.current[1] - currentCoords.current.top + scene.current.scrollTop;
+      const x = e.clientX - draggingStartCoordinates.current[0] - currentCoords.current.left + scene.current.scrollLeft - scene.current.offsetLeft;
+      const y = e.clientY - draggingStartCoordinates.current[1] - currentCoords.current.top + scene.current.scrollTop - scene.current.offsetTop;
       draggingNode.current.style.transform = `translate(${x}px, ${y}px)`;
       lines.current = graph.moveNode(draggingNode.current.id, x, y);
     }

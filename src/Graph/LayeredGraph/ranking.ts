@@ -15,11 +15,12 @@ import { connectedness } from './connectedness';
 /** Распределение узлов по уровням
  * @param data - данные графа
  * @param graph - граф
+ * @param end - конечный узел
  * @param process - процесс */
-export const ranking = ({ paths }: IGraphData, graph: IGraph, process: number[]): IMatrix => {
+export const ranking = ({ paths }: IGraphData, graph: IGraph, process: number[], end: number): IMatrix => {
   let matrix: IMatrix = [];
   const processGraph: IGraph = setProcessRank(process, graph);
-  arrangeRanks(processGraph, graph);
+  arrangeRanks(processGraph, graph, end);
   matrix = normalize(graph);
   return matrix;
 };
@@ -42,26 +43,13 @@ function setProcessRank(process: number[], graph: IGraph): IGraph {
   return processGraph;
 }
 
-// /** Определяем узлы, связанные с процессом
-//  * @param process - последовательность узлов
-//  * @param graph - граф */
-// function connectedWithProcess(process: IGraph, graph: IGraph) {
-// for (const node in graph) {
-//   /** Если узел не является узлом процесса и у него еще не определили приближенность к процессу */
-//   if (graph.hasOwnProperty(node) && !graph[node].processSibling && !graph[node].isProcess) {
-//     /** Проверяем, если среди дочерних или родителських узлов есть узел процесса */
-//     const relatives: number[] = [...graph[node].children, ...graph[node].parents];
-//     graph[node].processSibling = +relatives.some((n: number) => process[n] && process[n].isProcess);
-//   }
-// }
-// }
-
 /** Приближаем остальные узлы к уровням узлов процесса по среднему значению уровня
  * @param process - последовательность узлов
+ * @param end - конечный узел
  * @param graph - граф */
-function arrangeRanks(process: IGraph, graph: IGraph) {
+function arrangeRanks(process: IGraph, graph: IGraph, end: number) {
   /** [1] Определяем узлы, связанные с процессом */
-  connectedness(process, graph);
+  connectedness(process, graph, end);
 
   /** [2] Сортируем по приближенности к процессу */
   const entries: IEntry[] = Object.entries(graph)
@@ -75,9 +63,9 @@ function arrangeRanks(process: IGraph, graph: IGraph) {
     let relativesCount: number = 0;
     /** Узлы, связанные с текущим узлов */
 
-    /** Суммируем уровни всех родственников, кроме конца процесса */
+    /** Суммируем уровни всех родственников, кроме конца процесса и этого же узла */
     [...e[1].children, ...e[1].parents].forEach((n: number) => {
-      if (graph[n].type !== 'end') {
+      if (graph[n].type !== 'end' && n !== +e[0]) {
         mRank += graph[n].y;
         /** Если узел, не являющийся частью процесса, еще не был переставлен на уровень, то его не учитываем */
         (graph[n].isProcess || graph[n].y) && relativesCount++;
@@ -98,7 +86,8 @@ function normalize(graph: IGraph): IMatrix {
 
   /** Собираем массив entries графа, отсортированный по уровню и принадлежности процессу */
   const entries: IEntry[] = Object.entries(graph).sort(
-    (a: IEntry, b: IEntry) => b[1].isProcess - a[1].isProcess || a[1].y - b[1].y
+    (a: IEntry, b: IEntry) =>
+      b[1].isProcess - a[1].isProcess || a[1].y - b[1].y || a[1].processSibling - b[1].processSibling
   );
 
   /** Находи конец и ставим его в конец списка */

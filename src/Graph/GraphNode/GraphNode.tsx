@@ -12,7 +12,7 @@ const GraphNode: React.FC<IProps> = ({ item }) => {
   return (
     <div className={`node__content ${item.node.type ? 'node__content--bounds' : ''}`}>
       {item.node.type ? (
-        <>{item.node.type.toLowerCase() === 'start' ? 'Начало процесса' : 'Конец процесса'}</>
+        <>{item.node.type.toLowerCase() === 'start' ? 'Process Start' : 'Process End'}</>
       ) : (
         <>
           {item.node.metrics && (

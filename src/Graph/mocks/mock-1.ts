@@ -3,7 +3,7 @@ export default {
     { name: '[START]', type: 'start' },
     { name: '[END]', type: 'end' },
     {
-      name: 'ОТПРАВЛЕНО В БАНК',
+      name: 'a',
       metrics: {
         count: 4519,
         cycling: 23.677,
@@ -11,7 +11,7 @@ export default {
       }
     },
     {
-      name: 'ОТПРАВЛЕНО В МИДДЛ',
+      name: 'b',
       metrics: {
         count: 4376,
         cycling: 41.773,
@@ -19,7 +19,7 @@ export default {
       }
     },
     {
-      name: 'ПРИНЯТО В РАБОТУ ЦОПП',
+      name: 'c',
       metrics: {
         count: 4531,
         cycling: 23.835,
@@ -27,7 +27,7 @@ export default {
       }
     },
     {
-      name: 'ЧЕРНОВИК',
+      name: 'd',
       metrics: {
         count: 2559,
         cycling: 51.348,
@@ -35,7 +35,7 @@ export default {
       }
     },
     {
-      name: 'КРЕДИТ ОДОБРЕН',
+      name: 'e',
       metrics: {
         count: 3069,
         cycling: 0.0,
@@ -43,7 +43,7 @@ export default {
       }
     },
     {
-      name: 'Назначена на вторую линию',
+      name: 'f',
       metrics: {
         count: 7,
         cycling: 0.0,
@@ -51,7 +51,7 @@ export default {
       }
     },
     {
-      name: 'ОТКАЗ БАНКА ПО ЗАЕМЩИКУ',
+      name: 'g',
       metrics: {
         count: 382,
         cycling: 0.0,
@@ -59,7 +59,7 @@ export default {
       }
     },
     {
-      name: 'ПРОВЕРКА В МИДДЛ',
+      name: 'h',
       metrics: {
         count: 4375,
         cycling: 41.76,
@@ -67,7 +67,7 @@ export default {
       }
     },
     {
-      name: 'ВОЗВРАТ КЛИЕНТУ',
+      name: 'i',
       metrics: {
         count: 1304,
         cycling: 44.171,
@@ -75,7 +75,7 @@ export default {
       }
     },
     {
-      name: 'КРЕДИТНЫЙ АНАЛИЗ',
+      name: 'j',
       metrics: {
         count: 6910,
         cycling: 50.13,
@@ -83,7 +83,7 @@ export default {
       }
     },
     {
-      name: 'ВОЗВРАТ НА ДОРАБОТКУ',
+      name: 'k',
       metrics: {
         count: 380,
         cycling: 39.736,
