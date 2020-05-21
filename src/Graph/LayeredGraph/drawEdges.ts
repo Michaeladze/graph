@@ -41,17 +41,22 @@ export const drawEdges = (
 
     /** Определяем максимальную координату X для определения ширины сцены */
     let maxX: number = Number.MIN_SAFE_INTEGER;
+    /** Определяем максимальную координату Y для определения высоты сцены */
+    let maxY: number = Number.MIN_SAFE_INTEGER;
+
     Object.values(graph).forEach((v: IGraphNode) => {
       maxX = Math.max(maxX, v.css.translate.x);
+      maxY = Math.max(maxY, v.css.translate.y);
     });
 
     /** Отступ от правого края экрана */
     const paddingRight: number = 20;
 
-    maxX = Math.max(maxX + paddingRight, scene.scrollWidth);
+    maxX = Math.max(maxX + paddingRight + config.rect.width, scene.scrollWidth);
+    maxY = Math.max(maxY + paddingRight, scene.scrollHeight);
 
     // const layer = scene.firstElementChild;
-    const svg = d3.select(scene).append('svg').attr('width', maxX).attr('height', scene.scrollHeight);
+    const svg = d3.select(scene).append('svg').attr('width', maxX).attr('height', maxY);
 
     const { points, metricsCoords }: ICoordsResult = getCoords(graph, pathMap, edges, config.rect);
 

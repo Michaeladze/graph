@@ -121,12 +121,18 @@ function insertFakeNode(
   const n1: IGraphNode = graph[from];
   const n2: IGraphNode = graph[to];
   const c: boolean = n1.y > n2.y;
-  let y: number = c ? n1.y - 1 : n1.y + 1;
+  const d: number = c ? -1 : 1;
+  let y: number = n1.y + d;
 
   /** Переопределяем from  */
   let fromNode: number = from;
 
   for (y; c ? y > n2.y : y < n2.y; c ? y-- : y++) {
+
+    // if (y !== n1.y + d && y !== n2.y - d) {
+    //   continue;
+    // }
+
     /** Генерируем имя фейкового узла */
     const name: number = hashNodeName(from, to);
     path.add(name);

@@ -18,6 +18,9 @@ const Graph: React.FC<IProps> = ({ data }) => {
   /** Табл */
   const lines = useRef<ILines>({});
 
+  /** ViewPort */
+  const [viewport, setViewport] = useState<[[number, number], [number, number]]>([[0, 0], [0, 0]]);
+
   /** Текущие координаты сцены */
   const currentCoords = useRef<{ left: number; top: number }>({ left: 0, top: 0 });
 
@@ -26,6 +29,7 @@ const Graph: React.FC<IProps> = ({ data }) => {
   /** Отрисовка ребер после отрисовки узлов */
   useEffect(() => {
     if (scene.current && nodes.length > 0 && graph) {
+      setViewport([[0, scene.current.clientHeight], [0, scene.current.clientWidth]]);
       lines.current = graph.drawEdges(scene.current);
     }
   }, [scene, nodes, graph]);
@@ -120,6 +124,8 @@ const Graph: React.FC<IProps> = ({ data }) => {
   /** Выводим узлы на экран */
   const nodesJSX = nodes.map((n: any) => {
     return (
+      n.css.translate.y + n.css.height >= viewport[0][0] && n.css.translate.y - n.css.height <= viewport[0][1] &&
+      n.css.translate.x + n.css.width >= viewport[1][0] && n.css.translate.x <= viewport[1][1] &&
       <div
         key={n.name}
         id={n.name}
@@ -143,8 +149,22 @@ const Graph: React.FC<IProps> = ({ data }) => {
 
   // -------------------------------------------------------------------------------------------------------------------
 
+  const onScroll = () => {
+    if (scene.current) {
+      const sv: number = scene.current.scrollTop;
+      const ev: number = sv + scene.current.clientHeight;
+
+      const sh: number = scene.current.scrollLeft;
+      const eh: number = sh + scene.current.clientWidth;
+
+      setViewport([[sv, ev], [sh, eh]]);
+    }
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
+
   return (
-    <div className='scene' id='scene' ref={scene}>
+    <div className='scene' id='scene' ref={scene} onScroll={onScroll}>
       {/*<TransformLayer currentCoords={currentCoords.current}>{nodesJSX}</TransformLayer>*/}
       {nodesJSX}
     </div>
