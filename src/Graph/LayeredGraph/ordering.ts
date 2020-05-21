@@ -28,6 +28,7 @@ export const ordering = (graph: IGraph, matrix: IMatrix, end: number): IMatrix =
 
   /** Ищем parent-child структуры и сдвигаем граф */
   matrix = findParentChild(graph, rearrangeMatrix(graph));
+  normalizeRows(matrix, graph);
 
   return fillGaps(graph);
 };
@@ -36,6 +37,7 @@ export const ordering = (graph: IGraph, matrix: IMatrix, end: number): IMatrix =
  * @param graph - граф
  * @param matrix - массив количества узлов на уровне */
 function findParentChild(graph: IGraph, matrix: IMatrix): IMatrix {
+
   /** Не эффективно */
   for (let rank: number = 0; rank < matrix.length; rank++) {
     const rankNodes: number[] = matrix[rank] as number[];
@@ -105,4 +107,27 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, 
     graph[child].x = graph[parent].x;
   }
   graph[child].y = graph[parent].y + 1;
+}
+
+/** Нормализация рядов */
+function normalizeRows(matrix: IMatrix, graph: IGraph) {
+  /** Таблица мэппинга уровня и индекса для нормализации */
+    // const map: INumberMap<number> = {};
+  const map = new Map();
+
+  /** Если в таблице map нет ключа Y, то создаем его и присваиваем ему index. Index увеличиваем на 1.
+   * Если встречаем узел с таким уже записанным в map уровнем, берем нормализованный уровень из map */
+  matrix.forEach((row: (number | undefined)[], currentY: number) => {
+    let idx: number = map.size;
+
+    !map.has(currentY) ? map.set(currentY, idx) : (idx = map.get(currentY));
+    /** Если в ряду нет массива, то создаем его */
+    !matrix[idx] && (matrix[idx] = []);
+
+    row.forEach((n: number | undefined) => {
+      if (n !== undefined) {
+        graph[n].y = map.get(currentY);
+      }
+    })
+  });
 }

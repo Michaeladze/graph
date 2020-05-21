@@ -24,7 +24,6 @@ import { translateFakeNodes } from './translateFakeNodes';
 import { detectStartEnd } from './detectStartEnd';
 import { createNodes } from './createNodes';
 import { stickToLeft } from './stickToLeft';
-import { rearrangeMatrix } from './rearrangeMatrix';
 import { shrinkFakeNodes } from './shrinkFakeNodes';
 
 export class LayeredGraph {
@@ -76,7 +75,8 @@ export class LayeredGraph {
     markers: this.markers
   };
 
-  constructor(public data: IGraphData) {}
+  constructor(public data: IGraphData) {
+  }
 
   /** Инициализируем граф */
   public init(): IGraphResult {
@@ -107,7 +107,6 @@ export class LayeredGraph {
     /** [5] Вставляем фейковые узлы */
     const fakes: IFakeResult = insertFakeNodes(this.edges, this.graph, this.matrix, this.process);
     this.pathMap = fakes.pathMap;
-    this.matrix = rearrangeMatrix(this.graph);
 
     /** [6] Балансировка */
     const balance: IBalanceResult = balancing(this.process, this.graph, this.matrix);
@@ -127,8 +126,6 @@ export class LayeredGraph {
     /** [11] Убираем пустые ячейки слева */
     stickToLeft(this.graph);
 
-    this.matrix = rearrangeMatrix(this.graph);
-
     console.log('%c Данные', 'color: #6ff9ff');
     console.log(this.data);
     console.log('%c -------------------', 'color: #6ff9ff');
@@ -136,10 +133,6 @@ export class LayeredGraph {
     console.log('%c Граф', 'color: #98ee99');
     console.log(this.graph);
     console.log('%c -------------------', 'color: #98ee99');
-
-    console.log('%c Матрица', 'color: #ffe54c');
-    console.log(this.matrix);
-    console.log('%c -------------------', 'color: #ffe54c');
 
     return {
       nodes,

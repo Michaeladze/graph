@@ -151,4 +151,4 @@ const Graph: React.FC<IProps> = ({ data }) => {
   );
 };
 
-export default Graph;
+export default React.memo(Graph);

@@ -1,7 +1,9 @@
 import {
-  IEdge, IFakeResult, IGraph, IGraphNode, IMatrix, IPathMap 
+  IEdge, IFakeResult, IGraph, IGraphNode, IMatrix, IPathMap
 } from './interfaces/interfaces';
-import { rearrangeMatrix } from './rearrangeMatrix';
+
+/** Количество вирутальных узлов */
+let n: number = 0;
 
 /** [Описание]
  * [1] Определяем, если между узлами ребро тянется через >1 уровней
@@ -126,28 +128,28 @@ function insertFakeNode(
 
   for (y; c ? y > n2.y : y < n2.y; c ? y-- : y++) {
     /** Генерируем имя фейкового узла */
-    const name: number = hashNodeName(from, to, y);
+    const name: number = hashNodeName(from, to);
     path.add(name);
 
     insertedNodeIndex = insertNode(graph, edges, name, y, desiredX, fromNode, to, isProcess, process);
     indexesToRemove.add(insertedNodeIndex);
     fromNode = name;
+    matrix[y][desiredX] = name;
   }
 
   return {
     indexesToRemove,
-    matrix: rearrangeMatrix(graph)
+    matrix
   };
 }
 
 /** Функция хеширования названия фейкового узла
  * @param from - откуда идем
  * @param to - куда идем*
- * @param zeros - количетво нуле в имени
  * */
-function hashNodeName(from: number, to: number, zeros: number): number {
-  const s: string = new Array(zeros).fill('0').join('');
-  return -Math.abs(+`${to}${s}${from}`);
+function hashNodeName(from: number, to: number): number {
+  n++;
+  return -Math.abs(+`${to}${n}${from}`);
 }
 
 /** Добавляем узел
