@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { ReactComponent as Fit } from '../icons/fit.svg';
 import './TransformLayer.scss';
 
@@ -31,13 +31,12 @@ const TransformLayer: React.FC<IProps> = ({ children }) => {
 
   /** Увеличение / Уменьшение */
   const scale = useRef<number>(1);
+  /** Точка начала зума */
+  const scaleOrigin = useRef({ x: 0, y: 0 });
+
   /** Скролл */
   const scroll = useRef({ x: 0, y: 0 });
 
-  useEffect(() => {
-    // @ts-ignore
-    console.log(layer.current.firstElementChild.scrollWidth);
-  }, [layer])
 
   // -------------------------------------------------------------------------------------------------------------------
 
@@ -48,9 +47,19 @@ const TransformLayer: React.FC<IProps> = ({ children }) => {
 
       /** Zoom in/out */
       if (e.ctrlKey) {
+        const cs = scale.current;
         scale.current += e.deltaY * -restrictions.scaleStep;
-
         scale.current = Math.min(Math.max(restrictions.minZoom, scale.current), restrictions.maxZoom);
+
+        const ratio = 1 - scale.current / cs;
+        scroll.current.x += (e.clientX + scroll.current.x) * ratio;
+        scroll.current.y += (e.clientY + scroll.current.y) * ratio;
+
+        scaleOrigin.current.x = e.clientX * ratio;
+        scaleOrigin.current.y = e.clientY * ratio;
+
+        scene.style.transformOrigin = `center`;
+
         scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
       } else {
         /** Scroll X */
@@ -74,6 +83,7 @@ const TransformLayer: React.FC<IProps> = ({ children }) => {
     if (layer.current) {
       const scene = layer.current.firstElementChild as HTMLDivElement;
       scene.style.transition = `transform ${animations.transition / 1000}s ease-in-out`;
+      scene.style.transformOrigin = 'center';
 
       const initWidth = scene.scrollWidth;
       const initHeight = scene.scrollHeight;
