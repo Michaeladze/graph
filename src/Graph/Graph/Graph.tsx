@@ -19,9 +19,6 @@ const Graph: React.FC<IProps> = ({ data }) => {
   /** Табл */
   const lines = useRef<ILines>({});
 
-  /** Текущие координаты сцены */
-  const currentCoords = useRef<{ left: number; top: number }>({ left: 0, top: 0 });
-
   // -------------------------------------------------------------------------------------------------------------------
 
   /** Отрисовка ребер после отрисовки узлов */
@@ -66,10 +63,12 @@ const Graph: React.FC<IProps> = ({ data }) => {
   };
 
   const onMouseMove = (e: React.MouseEvent | MouseEvent) => {
-    if (draggingNode.current && dragging.current && graph && scene.current) {
+    if (draggingNode.current && dragging.current && scene.current && graph) {
       e.stopPropagation();
-      const x = e.clientX - draggingStartCoordinates.current[0] - currentCoords.current.left + scene.current.scrollLeft - scene.current.offsetLeft;
-      const y = e.clientY - draggingStartCoordinates.current[1] - currentCoords.current.top + scene.current.scrollTop - scene.current.offsetTop;
+      const r: DOMRect = scene.current.getBoundingClientRect();
+      const scale = r.width / scene.current.offsetWidth;
+      const x = (e.clientX - draggingStartCoordinates.current[0] + scene.current.scrollLeft - r.x) / scale;
+      const y = (e.clientY - draggingStartCoordinates.current[1] + scene.current.scrollTop - r.y) / scale;
       draggingNode.current.style.transform = `translate(${x}px, ${y}px)`;
       lines.current = graph.moveNode(draggingNode.current.id, x, y);
     }
