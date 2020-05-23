@@ -14,7 +14,6 @@
 .nav {
   min-width: 140px;
   background-color: #efefef;
-  margin-right: 20px;
 
   display: flex;
   flex-direction: column;
