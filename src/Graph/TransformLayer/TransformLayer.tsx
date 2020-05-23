@@ -47,19 +47,8 @@ const TransformLayer: React.FC<IProps> = ({ children }) => {
 
       /** Zoom in/out */
       if (e.ctrlKey) {
-        const cs = scale.current;
         scale.current += e.deltaY * -restrictions.scaleStep;
         scale.current = Math.min(Math.max(restrictions.minZoom, scale.current), restrictions.maxZoom);
-
-        const ratio = 1 - scale.current / cs;
-        scroll.current.x += (e.clientX + scroll.current.x) * ratio;
-        scroll.current.y += (e.clientY + scroll.current.y) * ratio;
-
-        scaleOrigin.current.x = e.clientX * ratio;
-        scaleOrigin.current.y = e.clientY * ratio;
-
-        scene.style.transformOrigin = `center`;
-
         scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
       } else {
         /** Scroll X */
