@@ -10,6 +10,7 @@ import {
   ILines,
   IMarkers,
   IMatrix,
+  INodeElement,
   IPathMap,
   IRect
 } from './interfaces/interfaces';
@@ -75,6 +76,11 @@ export class LayeredGraph {
     markers: this.markers
   };
 
+  /** Перемещенные узлы */
+  private movedNodes: number[] = [];
+  /** Состояние графа для восстановление вида */
+  private initialGraph: IGraph = {};
+
   constructor(public data: IGraphData) {
   }
 
@@ -118,13 +124,16 @@ export class LayeredGraph {
     this.median = tfn.median;
 
     /** [9] Создаем массив узлов с координатами */
-    const nodes: any = createNodes(this.graph, this.data, this.rect);
+    const nodes: INodeElement[] = createNodes(this.graph, this.data, this.rect);
 
     /** [10] Сжимаем фейковые узлы */
     shrinkFakeNodes(tfn.paths, this.rect, this.graph, this.median);
 
     /** [11] Убираем пустые ячейки слева */
     stickToLeft(this.graph);
+
+    /** [12] Копируем состояние графа для восстановления вида */
+    this.initialGraph = JSON.parse(JSON.stringify(this.graph));
 
     console.log('%c Данные', 'color: #6ff9ff');
     console.log(this.data);
@@ -140,7 +149,7 @@ export class LayeredGraph {
     };
   }
 
-  /** [11] Рисуем ребра */
+  /** [12] Рисуем ребра */
   public drawEdges(scene: HTMLDivElement): ILines {
     this.scene = scene;
     return drawEdges(this.data.edges, this.graph, this.pathMap, this.process, this.scene, this.config);
@@ -150,10 +159,33 @@ export class LayeredGraph {
   public moveNode(id: number, x: number, y: number): ILines {
     this.graph[id].css.translate.x = x;
     this.graph[id].css.translate.y = y;
+
+    const index: number = this.movedNodes.findIndex((n: number) => n === id);
+    if (index < 0) {
+      this.movedNodes.push(id);
+    }
+
     if (this.scene) {
       return drawEdges(this.data.edges, this.graph, this.pathMap, this.process, this.scene, this.config);
     }
 
     return {};
+  }
+
+  /** Восстановить вид */
+  public reset(): ILines {
+    this.movedNodes.forEach((n: number) => {
+      const node: HTMLElement | null = document.getElementById(`${n}`);
+      if (node) {
+        this.graph[n].css.translate.x = this.initialGraph[n].css.translate.x;
+        this.graph[n].css.translate.y = this.initialGraph[n].css.translate.y;
+        node.style.transform = `translate(${this.graph[n].css.translate.x}px, ${this.graph[n].css.translate.y}px)`;
+      }
+    });
+
+    this.movedNodes = [];
+
+    return drawEdges(this.data.edges, this.initialGraph, this.pathMap, this.process,
+      this.scene as HTMLDivElement, this.config)
   }
 }

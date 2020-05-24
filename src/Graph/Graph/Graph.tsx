@@ -143,8 +143,17 @@ const Graph: React.FC<IProps> = ({ data }) => {
 
   // -------------------------------------------------------------------------------------------------------------------
 
+  /** Восстановить вид */
+  const reset = () => {
+    if (graph) {
+      lines.current = graph.reset();
+    }
+  }
+
+  // -------------------------------------------------------------------------------------------------------------------
+
   return (
-    <TransformLayer>
+    <TransformLayer reset={reset}>
       <div className='scene' id='scene' ref={scene}>
         {nodesJSX}
       </div>

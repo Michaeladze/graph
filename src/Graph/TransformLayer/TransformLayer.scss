@@ -10,12 +10,15 @@
   bottom: 20px;
   right: 20px;
   z-index: 11;
+
+  display: flex;
+  align-items: center;
 }
 
 .overlay-block__button {
   width: 40px;
   height: 40px;
-  margin-left: 40px;
+  margin-left: 20px;
   border: 0;
   background: #ffffff;
   border-radius: 8px;

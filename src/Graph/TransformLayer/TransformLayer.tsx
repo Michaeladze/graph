@@ -1,12 +1,15 @@
 import React, { ReactNode, useRef } from 'react';
 import { ReactComponent as Fit } from '../icons/fit.svg';
+import { ReactComponent as Reset } from '../icons/reset.svg';
 import './TransformLayer.scss';
 
 interface IProps {
   children: ReactNode | ReactNode[];
+  /** Восстановить вид */
+  reset: () => void;
 }
 
-const TransformLayer: React.FC<IProps> = ({ children }) => {
+const TransformLayer: React.FC<IProps> = ({ children, reset }) => {
 
   /** Ограничения */
   const restrictions = {
@@ -31,9 +34,6 @@ const TransformLayer: React.FC<IProps> = ({ children }) => {
 
   /** Увеличение / Уменьшение */
   const scale = useRef<number>(1);
-  /** Точка начала зума */
-  const scaleOrigin = useRef({ x: 0, y: 0 });
-
   /** Скролл */
   const scroll = useRef({ x: 0, y: 0 });
 
@@ -99,6 +99,9 @@ const TransformLayer: React.FC<IProps> = ({ children }) => {
     <div className='transform-layer' ref={layer} onWheel={onWheel}>
       {children}
       <div className='overlay-block'>
+        <button className='overlay-block__button' onClick={reset}>
+          <Reset/>
+        </button>
         <button className='overlay-block__button' onClick={fitToScreen}>
           <Fit/>
         </button>
