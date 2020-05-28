@@ -7,9 +7,13 @@ interface IProps {
   children: ReactNode | ReactNode[];
   /** Восстановить вид */
   reset: () => void;
+  /** Сцена */
+  scene: HTMLDivElement | null;
+  /** Сцена SVG */
+  sceneSvg: SVGSVGElement | null;
 }
 
-const TransformLayer: React.FC<IProps> = ({ children, reset }) => {
+const TransformLayer: React.FC<IProps> = ({ children, reset, scene, sceneSvg }) => {
 
   /** Ограничения */
   const restrictions = {
@@ -42,25 +46,25 @@ const TransformLayer: React.FC<IProps> = ({ children, reset }) => {
 
   /** Прокурутки */
   const onWheel = (e: React.WheelEvent) => {
-    if (layer.current) {
-      const scene = layer.current.firstElementChild as HTMLDivElement;
+    if (scene && sceneSvg) {
 
       /** Zoom in/out */
       if (e.ctrlKey) {
         scale.current += e.deltaY * -restrictions.scaleStep;
         scale.current = Math.min(Math.max(restrictions.minZoom, scale.current), restrictions.maxZoom);
-        scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
       } else {
         /** Scroll X */
         scroll.current.x += e.deltaX * -restrictions.scrollStep;
         scroll.current.x = Math.min(Math.max(restrictions.minScrollX, scroll.current.x), restrictions.maxScrollX);
-        scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
 
         /** Scroll Y */
         scroll.current.y += e.deltaY * -restrictions.scrollStep;
         scroll.current.y = Math.min(Math.max(restrictions.minScrollY, scroll.current.y), restrictions.maxScrollY);
-        scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
       }
+
+      scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
+      const g: SVGGElement = sceneSvg.firstElementChild as SVGGElement;
+      g.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
 
     }
   }
@@ -69,9 +73,11 @@ const TransformLayer: React.FC<IProps> = ({ children, reset }) => {
 
   /** Помещаем сцену в экран */
   const fitToScreen = () => {
-    if (layer.current) {
-      const scene = layer.current.firstElementChild as HTMLDivElement;
+    if (layer.current && scene && sceneSvg) {
+      const g: SVGGElement = sceneSvg.firstElementChild as SVGGElement;
+
       scene.style.transition = `transform ${animations.transition / 1000}s ease-in-out`;
+      g.style.transition = `transform ${animations.transition / 1000}s ease-in-out`;
       scene.style.transformOrigin = 'center';
 
       const initWidth = scene.scrollWidth;
@@ -86,9 +92,11 @@ const TransformLayer: React.FC<IProps> = ({ children, reset }) => {
       scroll.current.y = ((scale.current * scene.scrollHeight) - initHeight) / 2;
 
       scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
+      g.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
 
       setTimeout(() => {
         scene.style.transition = 'none';
+        g.style.transition = 'none';
       }, animations.transition);
     }
   }

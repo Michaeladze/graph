@@ -12,6 +12,7 @@ interface IProps {
 const Graph: React.FC<IProps> = ({ data }) => {
   /** Сцена */
   const scene = useRef<HTMLDivElement>(null);
+  const sceneSvg = useRef<SVGSVGElement>(null);
   /** Граф */
   const [graph, setGraph] = useState<LayeredGraph>();
   /** Узлы */
@@ -23,8 +24,8 @@ const Graph: React.FC<IProps> = ({ data }) => {
 
   /** Отрисовка ребер после отрисовки узлов */
   useEffect(() => {
-    if (scene.current && nodes.length > 0 && graph) {
-      lines.current = graph.drawEdges(scene.current);
+    if (scene.current && nodes.length > 0 && graph && sceneSvg.current) {
+      lines.current = graph.drawEdges(scene.current, sceneSvg.current);
     }
   }, [scene, nodes, graph]);
 
@@ -153,10 +154,11 @@ const Graph: React.FC<IProps> = ({ data }) => {
   // -------------------------------------------------------------------------------------------------------------------
 
   return (
-    <TransformLayer reset={reset}>
+    <TransformLayer reset={reset} scene={scene.current} sceneSvg={sceneSvg.current}>
       <div className='scene' id='scene' ref={scene}>
         {nodesJSX}
       </div>
+      <svg className='scene__svg' ref={sceneSvg}/>
     </TransformLayer>
   );
 };

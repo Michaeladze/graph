@@ -13,6 +13,7 @@ import {
   IRect
 } from './interfaces/interfaces';
 import * as d3 from 'd3';
+import { StyleHTMLAttributes } from 'react';
 
 type FourNumber = [number, number, number, number];
 
@@ -27,16 +28,28 @@ export const drawEdges = (
   pathMap: IPathMap,
   process: number[],
   scene: HTMLDivElement,
+  sceneSvg: SVGSVGElement,
   config: IConfig
 ): ILines => {
   /** Таблица путей для константного доступа */
   const lines: ILines = {};
 
   if (scene) {
+    let style: string | null = '';
+
     /** Ищем на сцене svg и метрики и удаляем его, чтобы при повторном рендере svg не наложились друг на друга */
-    const svgElement = scene.querySelector('svg');
+    if (sceneSvg) {
+      /** Сохраняем стили трансформации, которые были на элементе g перед перерисовкой */
+      if (sceneSvg.firstElementChild) {
+        style = (sceneSvg.firstElementChild as SVGGElement).getAttribute('style');
+      }
+
+      while (sceneSvg.firstElementChild) {
+        sceneSvg.removeChild(sceneSvg.firstElementChild);
+      }
+    }
+
     const metricsElement = scene.querySelector('.scene__metrics');
-    svgElement && scene.removeChild(svgElement);
     metricsElement && scene.removeChild(metricsElement);
 
     /** Определяем максимальную координату X для определения ширины сцены */
@@ -56,7 +69,11 @@ export const drawEdges = (
     maxY = Math.max(maxY + paddingRight, scene.scrollHeight);
 
     // const layer = scene.firstElementChild;
-    const svg = d3.select(scene).append('svg').attr('width', maxX).attr('height', maxY);
+    const svg = d3.select(sceneSvg).append('g');
+    svg.attr('width', maxX).attr('height', maxY);
+    if (style) {
+      (sceneSvg.firstElementChild as SVGGElement).setAttribute('style', style);
+    }
 
     const { points, metricsCoords }: ICoordsResult = getCoords(graph, pathMap, edges, config.rect);
 

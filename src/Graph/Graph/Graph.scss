@@ -2,6 +2,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: 2;
 }
 
 .graph__node {
@@ -25,10 +26,17 @@
     display: none;
 }
 
-.scene svg {
+.scene__svg {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.scene__svg g {
+    transform-origin: center;
 }
 
 // ----------- Metrics ---------

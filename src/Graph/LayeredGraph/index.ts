@@ -42,6 +42,8 @@ export class LayeredGraph {
   public end: number = -1;
   /** Сцена */
   public scene: HTMLDivElement | null = null;
+  /** SVG Сцена */
+  public sceneSvg: SVGSVGElement | null = null;
   /** Таблица путей */
   public pathMap: IPathMap = {};
   /** Ребра */
@@ -150,9 +152,10 @@ export class LayeredGraph {
   }
 
   /** [12] Рисуем ребра */
-  public drawEdges(scene: HTMLDivElement): ILines {
+  public drawEdges(scene: HTMLDivElement, sceneSvg: SVGSVGElement): ILines {
     this.scene = scene;
-    return drawEdges(this.data.edges, this.graph, this.pathMap, this.process, this.scene, this.config);
+    this.sceneSvg = sceneSvg;
+    return drawEdges(this.data.edges, this.graph, this.pathMap, this.process, this.scene, this.sceneSvg, this.config);
   }
 
   /** Перерисовка смежных ребер при перемещении узла */
@@ -165,8 +168,8 @@ export class LayeredGraph {
       this.movedNodes.push(id);
     }
 
-    if (this.scene) {
-      return drawEdges(this.data.edges, this.graph, this.pathMap, this.process, this.scene, this.config);
+    if (this.scene && this.sceneSvg) {
+      return drawEdges(this.data.edges, this.graph, this.pathMap, this.process, this.scene, this.sceneSvg, this.config);
     }
 
     return {};
@@ -186,6 +189,6 @@ export class LayeredGraph {
     this.movedNodes = [];
 
     return drawEdges(this.data.edges, this.initialGraph, this.pathMap, this.process,
-      this.scene as HTMLDivElement, this.config)
+      this.scene as HTMLDivElement, this.sceneSvg as SVGSVGElement, this.config)
   }
 }
