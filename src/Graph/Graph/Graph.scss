@@ -16,6 +16,7 @@
     border-radius: 8px;
     background-color: white;
     cursor: default;
+    user-select: none;
 }
 
 
@@ -44,6 +45,7 @@
 .scene__metrics {
     width: 100%;
     height: 100%;
+    user-select: none;
 }
 
 .graph__edge-count {
