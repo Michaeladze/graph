@@ -29,6 +29,19 @@ const Graph: React.FC<IProps> = ({ data }) => {
     }
   }, [scene, nodes, graph]);
 
+  /** Перерисовка ребер при ресайзе */
+  useEffect(() => {
+    const draw = () => {
+      if (scene.current && sceneSvg.current && graph) {
+        graph.drawEdges(scene.current, sceneSvg.current);
+      }
+    };
+    window.addEventListener('resize', draw);
+    return () => {
+      window.removeEventListener('resize', draw);
+    }
+  }, [graph])
+
   // -------------------------------------------------------------------------------------------------------------------
 
   /** Инициализируем граф */
