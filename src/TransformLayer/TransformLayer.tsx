@@ -52,19 +52,29 @@ const TransformLayer: React.FC<IProps> = ({
   const onWheel = useCallback(
     (e: WheelEvent) => {
       e.preventDefault();
+
+      const deltaX = e.deltaX;
+      const deltaY = e.deltaY;
+
       if (scene && sceneSvg) {
         /** Zoom in/out */
         if (e.ctrlKey) {
-          scale.current += e.deltaY * -restrictions.scaleStep;
+          scale.current += deltaY * -restrictions.scaleStep;
           scale.current = Math.min(Math.max(restrictions.minZoom, scale.current), restrictions.maxZoom);
         } else {
-          /** Scroll X */
-          scroll.current.x += e.deltaX * -restrictions.scrollStep;
-          scroll.current.x = Math.min(Math.max(restrictions.minScrollX, scroll.current.x), restrictions.maxScrollX);
+          if (e.shiftKey) {
+            /** Scroll X on shift */
+            scroll.current.x += deltaY * -restrictions.scrollStep;
+            scroll.current.x = Math.min(Math.max(restrictions.minScrollX, scroll.current.x), restrictions.maxScrollX);
+          } else {
+            /** Scroll X */
+            scroll.current.x += deltaX * -restrictions.scrollStep;
+            scroll.current.x = Math.min(Math.max(restrictions.minScrollX, scroll.current.x), restrictions.maxScrollX);
 
-          /** Scroll Y */
-          scroll.current.y += e.deltaY * -restrictions.scrollStep;
-          scroll.current.y = Math.min(Math.max(restrictions.minScrollY, scroll.current.y), restrictions.maxScrollY);
+            /** Scroll Y */
+            scroll.current.y += deltaY * -restrictions.scrollStep;
+            scroll.current.y = Math.min(Math.max(restrictions.minScrollY, scroll.current.y), restrictions.maxScrollY);
+          }
         }
 
         scene.style.transform = `scale(${scale.current}) translate(${scroll.current.x}px, ${scroll.current.y}px)`;
