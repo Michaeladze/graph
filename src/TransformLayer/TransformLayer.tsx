@@ -19,12 +19,15 @@ interface IProps {
 const TransformLayer: React.FC<IProps> = ({
   children, reset, onScreenshot, scene, sceneSvg 
 }) => {
+
+  const isMac = useRef<boolean>(navigator.platform.indexOf('Mac') > -1)
+
   /** Ограничения */
   const restrictions = {
     minZoom: 0.125,
     maxZoom: 4,
-    scaleStep: 0.01,
-    scrollStep: 1,
+    scaleStep: isMac.current ? 0.01 : 0.07,
+    scrollStep: isMac.current ? 1 : 30,
     minScrollX: -3000,
     maxScrollX: 3000,
     minScrollY: -3000,
@@ -53,8 +56,8 @@ const TransformLayer: React.FC<IProps> = ({
     (e: WheelEvent) => {
       e.preventDefault();
 
-      const deltaX = e.deltaX;
-      const deltaY = e.deltaY;
+      const deltaX = isMac.current ? e.deltaX : e.deltaX === 0 ? 0 : e.deltaX > 0 ? 1 : -1;
+      const deltaY = isMac.current ? e.deltaY : e.deltaY === 0 ? 0 : e.deltaY > 0 ? 1 : -1;
 
       if (scene && sceneSvg) {
         /** Zoom in/out */
