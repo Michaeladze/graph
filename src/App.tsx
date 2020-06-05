@@ -3,14 +3,14 @@ import './App.css';
 import Graph from './Graph/Graph';
 
 
-import data1 from './Graph/mocks/mock-1';
-import data2 from './Graph/mocks/mock-2';
-import data3 from './Graph/mocks/mock-3';
-import data4 from './Graph/mocks/mock-4';
-import data5 from './Graph/mocks/mock-5';
-import data6 from './Graph/mocks/graph1.json';
-import data7 from './Graph/mocks/graph2.json';
-import data8 from './Graph/mocks/graph3.json';
+import data1 from './mocks/mock-1';
+import data2 from './mocks/mock-2';
+import data3 from './mocks/mock-3';
+import data4 from './mocks/mock-4';
+import data5 from './mocks/mock-5';
+import data6 from './mocks/graph1.json';
+import data7 from './mocks/graph2.json';
+import data8 from './mocks/graph3.json';
 
 function App() {
 

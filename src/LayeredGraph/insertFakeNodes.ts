@@ -1,5 +1,5 @@
 import {
-  IEdge, IFakeResult, IGraph, IGraphNode, IMatrix, IPathMap
+  IEdge, IFakeResult, IGraph, IGraphNode, IMatrix, IPathMap 
 } from './interfaces/interfaces';
 
 /** Количество вирутальных узлов */
@@ -128,7 +128,6 @@ function insertFakeNode(
   let fromNode: number = from;
 
   for (y; c ? y > n2.y : y < n2.y; c ? y-- : y++) {
-
     // if (y !== n1.y + d && y !== n2.y - d) {
     //   continue;
     // }

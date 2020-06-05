@@ -37,7 +37,6 @@ export const ordering = (graph: IGraph, matrix: IMatrix, end: number): IMatrix =
  * @param graph - граф
  * @param matrix - массив количества узлов на уровне */
 function findParentChild(graph: IGraph, matrix: IMatrix): IMatrix {
-
   /** Не эффективно */
   for (let rank: number = 0; rank < matrix.length; rank++) {
     const rankNodes: number[] = matrix[rank] as number[];
@@ -112,7 +111,7 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, 
 /** Нормализация рядов */
 function normalizeRows(matrix: IMatrix, graph: IGraph) {
   /** Таблица мэппинга уровня и индекса для нормализации */
-    // const map: INumberMap<number> = {};
+  // const map: INumberMap<number> = {};
   const map = new Map();
 
   /** Если в таблице map нет ключа Y, то создаем его и присваиваем ему index. Index увеличиваем на 1.
@@ -128,6 +127,6 @@ function normalizeRows(matrix: IMatrix, graph: IGraph) {
       if (n !== undefined) {
         graph[n].y = map.get(currentY);
       }
-    })
+    });
   });
 }

@@ -13,7 +13,6 @@ import {
   IRect
 } from './interfaces/interfaces';
 import * as d3 from 'd3';
-import { StyleHTMLAttributes } from 'react';
 
 type FourNumber = [number, number, number, number];
 

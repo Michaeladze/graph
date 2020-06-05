@@ -4,6 +4,8 @@ import { IGraphData, IGraphResult, ILines, INodeElement } from '../LayeredGraph/
 import { LayeredGraph } from '../LayeredGraph';
 import GraphNode from '../GraphNode/GraphNode';
 import TransformLayer from '../TransformLayer';
+import mock from '../mocks/mock-1';
+import html2canvas from 'html2canvas';
 
 interface IProps {
   data: IGraphData;
@@ -39,14 +41,14 @@ const Graph: React.FC<IProps> = ({ data }) => {
     window.addEventListener('resize', draw);
     return () => {
       window.removeEventListener('resize', draw);
-    }
-  }, [graph])
+    };
+  }, [graph]);
 
   // -------------------------------------------------------------------------------------------------------------------
 
   /** Инициализируем граф */
   useEffect(() => {
-    const graph = new LayeredGraph(data);
+    const graph = new LayeredGraph(data || mock);
     const { nodes }: IGraphResult = graph.init();
     setGraph(graph);
     setNodes(nodes);
@@ -148,7 +150,7 @@ const Graph: React.FC<IProps> = ({ data }) => {
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}>
-        {n.node && <GraphNode item={n}/>}
+        {n.node && <GraphNode item={n} />}
 
         {n.fake === 1 && n.name}
       </div>
@@ -157,21 +159,46 @@ const Graph: React.FC<IProps> = ({ data }) => {
 
   // -------------------------------------------------------------------------------------------------------------------
 
+  const onScreenshot = (element: HTMLElement | null, width: number, height: number, cb: () => void) => {
+    if (element) {
+      element.style.width = `${element.scrollWidth}px`;
+
+      html2canvas(element, {
+        height: height,
+        windowHeight: height,
+        width: width,
+        scrollY: 0,
+        scrollX: 0
+      }).then((canvas: HTMLCanvasElement) => {
+        const downloadLink = document.createElement('a');
+        downloadLink.setAttribute('download', 'Graph.png');
+        const dataURL = canvas.toDataURL('image/png');
+        const url = dataURL.replace(/^data:image\/png/, 'data:application/octet-stream');
+        downloadLink.setAttribute('href', url);
+        downloadLink.click();
+        element.style.width = '100%';
+        cb();
+      });
+    }
+  };
+
+  // -------------------------------------------------------------------------------------------------------------------
+
   /** Восстановить вид */
   const reset = () => {
     if (graph) {
       lines.current = graph.reset();
     }
-  }
+  };
 
   // -------------------------------------------------------------------------------------------------------------------
 
   return (
-    <TransformLayer reset={reset} scene={scene.current} sceneSvg={sceneSvg.current}>
+    <TransformLayer reset={reset} onScreenshot={onScreenshot} scene={scene.current} sceneSvg={sceneSvg.current}>
       <div className='scene' id='scene' ref={scene}>
         {nodesJSX}
       </div>
-      <svg className='scene__svg' ref={sceneSvg}/>
+      <svg className='scene__svg' ref={sceneSvg} />
     </TransformLayer>
   );
 };

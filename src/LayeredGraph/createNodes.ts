@@ -1,4 +1,6 @@
-import { IGraph, IGraphData, INode, INodeElement, INodeMetrics, IRect } from './interfaces/interfaces';
+import {
+  IGraph, IGraphData, INode, INodeElement, INodeMetrics, IRect 
+} from './interfaces/interfaces';
 
 /** Создаем массив узлов с координатами
  * @param graph - граф

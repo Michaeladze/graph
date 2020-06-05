@@ -83,8 +83,7 @@ export class LayeredGraph {
   /** Состояние графа для восстановление вида */
   private initialGraph: IGraph = {};
 
-  constructor(public data: IGraphData) {
-  }
+  constructor(public data: IGraphData) {}
 
   /** Инициализируем граф */
   public init(): IGraphResult {
@@ -188,7 +187,14 @@ export class LayeredGraph {
 
     this.movedNodes = [];
 
-    return drawEdges(this.data.edges, this.initialGraph, this.pathMap, this.process,
-      this.scene as HTMLDivElement, this.sceneSvg as SVGSVGElement, this.config)
+    return drawEdges(
+      this.data.edges,
+      this.initialGraph,
+      this.pathMap,
+      this.process,
+      this.scene as HTMLDivElement,
+      this.sceneSvg as SVGSVGElement,
+      this.config
+    );
   }
 }
