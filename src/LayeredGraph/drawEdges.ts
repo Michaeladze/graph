@@ -34,45 +34,9 @@ export const drawEdges = (
   const lines: ILines = {};
 
   if (scene) {
-    let style: string | null = '';
+    rerenderScene(sceneSvg, scene);
 
-    /** Ищем на сцене svg и метрики и удаляем его, чтобы при повторном рендере svg не наложились друг на друга */
-    if (sceneSvg) {
-      /** Сохраняем стили трансформации, которые были на элементе g перед перерисовкой */
-      if (sceneSvg.firstElementChild) {
-        style = (sceneSvg.firstElementChild as SVGGElement).getAttribute('style');
-      }
-
-      while (sceneSvg.firstElementChild) {
-        sceneSvg.removeChild(sceneSvg.firstElementChild);
-      }
-    }
-
-    const metricsElement = scene.querySelector('.scene__metrics');
-    metricsElement && scene.removeChild(metricsElement);
-
-    /** Определяем максимальную координату X для определения ширины сцены */
-    let maxX: number = Number.MIN_SAFE_INTEGER;
-    /** Определяем максимальную координату Y для определения высоты сцены */
-    let maxY: number = Number.MIN_SAFE_INTEGER;
-
-    Object.values(graph).forEach((v: IGraphNode) => {
-      maxX = Math.max(maxX, v.css.translate.x);
-      maxY = Math.max(maxY, v.css.translate.y);
-    });
-
-    /** Отступ от правого края экрана */
-    const paddingRight: number = 20;
-
-    maxX = Math.max(maxX + paddingRight + config.rect.width, scene.scrollWidth);
-    maxY = Math.max(maxY + paddingRight, scene.scrollHeight);
-
-    // const layer = scene.firstElementChild;
-    const svg = d3.select(sceneSvg).append('g');
-    svg.attr('width', maxX).attr('height', maxY);
-    if (style) {
-      (sceneSvg.firstElementChild as SVGGElement).setAttribute('style', style);
-    }
+    const svg = d3.select(sceneSvg.firstElementChild);
 
     const { points, metricsCoords }: ICoordsResult = getCoords(graph, pathMap, edges, config.rect);
 
@@ -271,9 +235,6 @@ function appendOverlayRect(graph: IGraph, node: number, svg: any): SVGPathElemen
     a8,8 0 0 1 -8,-8 V ${c.css.translate.y + 6} 
     a8,8 0 0 1 8,-8 z`;
 
-  // `M ${c.css.translate.x} ${c.css.translate.y} h ${c.css.width} v ${c.css.height}
-  //         H ${c.css.translate.x} Z`
-
   const path = svg
     .append('path')
     .attr('d', d)
@@ -335,16 +296,6 @@ function insertMetrics(metricsCoords: FourNumber[], edges: IEdge[], scene: HTMLD
       p.style.transform = `translate(${m[0]}px, ${m[1]}px)`;
       metricsElement.appendChild(p);
     }
-    // svg
-    //   .append('text')
-    //   .attr(
-    //     'class',
-    //     `graph__edge-count
-    //   ${edges[index].status && edges[index].status === 'disabled' ? 'graph__edge-count--disabled' : ''}`
-    //   )
-    //   .attr('x', m[0] + 2) // + 2px, чтобы не налезало на линию
-    //   .attr('y', m[1])
-    //   .text(count);
   });
 
   scene.appendChild(metricsElement);
@@ -370,4 +321,18 @@ function drawPath(
     .attr('marker-end', `url(#${disabled ? 'marker-arrow--disabled' : 'marker-arrow'})`);
 
   return path._groups[0][0];
+}
+
+/** Перерисовываем сцену */
+function rerenderScene(sceneSvg: SVGSVGElement, scene: HTMLDivElement) {
+
+  /** Ищем на сцене svg и метрики и удаляем его, чтобы при повторном рендере svg не наложились друг на друга */
+  if (sceneSvg && sceneSvg.firstElementChild) {
+    while (sceneSvg.firstElementChild.firstElementChild) {
+      sceneSvg.firstElementChild.removeChild(sceneSvg.firstElementChild.firstElementChild);
+    }
+  }
+
+  const metricsElement = scene.querySelector('.scene__metrics');
+  metricsElement && scene.removeChild(metricsElement);
 }

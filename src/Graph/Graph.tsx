@@ -198,7 +198,9 @@ const Graph: React.FC<IProps> = ({ data }) => {
       <div className='scene' id='scene' ref={scene}>
         {nodesJSX}
       </div>
-      <svg className='scene__svg' ref={sceneSvg} />
+      <svg className='scene__svg' ref={sceneSvg}>
+        <g/>
+      </svg>
     </TransformLayer>
   );
 };
