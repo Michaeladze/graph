@@ -43,18 +43,37 @@ function findParentChild(graph: IGraph, matrix: IMatrix): IMatrix {
 
     /** При динамическом добавлении могут возникнуть пустые ряды, поэтому нужна проверка */
     if (rankNodes) {
-      rankNodes.forEach((node: number | undefined) => {
-        graph[node as number].children.forEach((child: number) => {
-          const index: number = rankNodes.indexOf(child);
-          /** Если находим... */
-          if (index >= 0 && node !== rankNodes[index]) {
-            /** Меняем child координаты и родительне является ущлов процесса */
-            shiftRanks(rank, node as number, rankNodes[index] as number, graph, matrix);
-            /** И перераспределяем узлы в матрице */
-            matrix = rearrangeMatrix(graph);
+      for (let i = 0; i < rankNodes.length; i++) {
+        const node = rankNodes[i];
+
+        if (node) {
+          for (let j = 0; j < graph[node].children.length; j++) {
+            const child = graph[node].children[j];
+
+            const index: number = rankNodes.indexOf(child);
+            /** Если находим... */
+            if (index >= 0 && node !== rankNodes[index]) {
+              /** Меняем child координаты и родительне является ущлов процесса */
+              shiftRanks(rank, node as number, rankNodes[index] as number, graph, matrix);
+              /** И перераспределяем узлы в матрице */
+              matrix = rearrangeMatrix(graph);
+            }
           }
-        });
-      });
+        }
+      }
+
+      // rankNodes.forEach((node: number | undefined) => {
+      //   graph[node as number].children.forEach((child: number) => {
+      //     const index: number = rankNodes.indexOf(child);
+      //     /** Если находим... */
+      //     if (index >= 0 && node !== rankNodes[index]) {
+      //       /** Меняем child координаты и родительне является ущлов процесса */
+      //       shiftRanks(rank, node as number, rankNodes[index] as number, graph, matrix);
+      //       /** И перераспределяем узлы в матрице */
+      //       matrix = rearrangeMatrix(graph);
+      //     }
+      //   });
+      // });
     }
   }
 
@@ -69,6 +88,10 @@ function findParentChild(graph: IGraph, matrix: IMatrix): IMatrix {
  * @param matrix - матрица
  * */
 function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, matrix: IMatrix) {
+  if (graph[parent].y !== graph[child].y) {
+    return;
+  }
+
   /** Сортируем граф по уровням */
   const entries: IEntry[] = Object.entries(graph).sort((a: IEntry, b: IEntry) => a[1].y - b[1].y);
 
@@ -83,8 +106,7 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, 
   let startShiftingRank: number = rank;
 
   /** Задаем сдвиг на 1 уровень вниз */
-  const condition: boolean =
-    (processNode && relatives.indexOf(+processNode[0]) >= 0) || matrix[rank + 1][graph[parent].x] !== undefined;
+  const condition: boolean = processNode && relatives.indexOf(+processNode[0]) >= 0; // || matrix[rank + 1][graph[parent].x] !== undefined;
   if (condition) {
     startShiftingRank = rank + 1;
   }
@@ -100,12 +122,6 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, 
       }
     });
   }
-
-  // /** Ставим дочерний узел под родительский. Если он является частью процесса, то меняем только Y */
-  // if (!graph[child].isProcess && !graph[parent].isProcess) {
-  //   graph[child].x = graph[parent].x;
-  // }
-  // graph[child].y = graph[parent].y + 1;
 
   /** Ставим дочерний узел под родительский на первый свободный Х. Если он является частью процесса, то меняем только Y */
   if (!graph[child].isProcess && !graph[parent].isProcess) {
@@ -123,7 +139,7 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, 
 /** Нормализация рядов */
 function normalizeRows(matrix: IMatrix, graph: IGraph) {
   /** Таблица мэппинга уровня и индекса для нормализации */
-  // const map: INumberMap<number> = {};
+    // const map: INumberMap<number> = {};
   const map = new Map();
 
   /** Если в таблице map нет ключа Y, то создаем его и присваиваем ему index. Index увеличиваем на 1.
