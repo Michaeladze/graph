@@ -101,9 +101,21 @@ function shiftRanks(rank: number, parent: number, child: number, graph: IGraph, 
     });
   }
 
-  /** Ставим дочерний узел под родительский. Если он является частью процесса, то меняем только Y */
+  // /** Ставим дочерний узел под родительский. Если он является частью процесса, то меняем только Y */
+  // if (!graph[child].isProcess && !graph[parent].isProcess) {
+  //   graph[child].x = graph[parent].x;
+  // }
+  // graph[child].y = graph[parent].y + 1;
+
+  /** Ставим дочерний узел под родительский на первый свободный Х. Если он является частью процесса, то меняем только Y */
   if (!graph[child].isProcess && !graph[parent].isProcess) {
-    graph[child].x = graph[parent].x;
+    let x = graph[parent].x;
+    if (matrix[graph[parent].y + 1]) {
+      while (matrix[graph[parent].y + 1][x] !== undefined) {
+        x++;
+      }
+    }
+    graph[child].x = x;
   }
   graph[child].y = graph[parent].y + 1;
 }
