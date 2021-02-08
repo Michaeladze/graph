@@ -58,11 +58,12 @@ function App() {
   }
 
   return (
-    <div className="root">
-      <nav className="nav">
+    <div className="graph__graph">
+      Antoha
+      <nav className='graph__nav'>
         {
           datasets.map((d: any) =>
-            <button key={d.id} className={`nav__link ${active === d.id ? 'active' : ''}`}
+            <button key={d.id} className={`graph__nav-link ${active === d.id ? 'active' : ''}`}
                     onClick={() => onClick(d)}> DataSet {d.id}</button>)
         }
       </nav>
