@@ -1,7 +1,6 @@
 import React, { ReactNode, useCallback, useEffect, useRef } from 'react';
-import { ReactComponent as Fit } from '../icons/fit.svg';
-import { ReactComponent as Reset } from '../icons/reset.svg';
-import { ReactComponent as ScreenShot } from '../icons/screenshot.svg';
+import Fit from '../icons/fit';
+import Reset from '../icons/reset';
 import './TransformLayer.scss';
 
 interface IProps {
@@ -17,7 +16,7 @@ interface IProps {
 }
 
 const TransformLayer: React.FC<IProps> = ({
-  children, reset, onScreenshot, scene, sceneSvg 
+  children, reset, onScreenshot, scene, sceneSvg
 }) => {
 
   const isMac = useRef<boolean>(navigator.platform.indexOf('Mac') > -1)
@@ -167,9 +166,6 @@ const TransformLayer: React.FC<IProps> = ({
         </button>
         <button className='overlay-block__button' onClick={reset}>
           <Reset />
-        </button>
-        <button className='overlay-block__button overlay-block__button-photo' onClick={onScreenShot}>
-          <ScreenShot />
         </button>
       </div>
     </div>
