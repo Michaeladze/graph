@@ -26,7 +26,7 @@ module.exports = {
     library: 'portfolio-graph',
     libraryTarget: 'umd',
     filename: 'index.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(`module`)
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -114,7 +114,7 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['dist']
+      cleanAfterEveryBuildPatterns: ['module']
     }),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
