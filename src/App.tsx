@@ -59,7 +59,6 @@ function App() {
 
   return (
     <div className="graph__graph">
-      Antoha
       <nav className='graph__nav'>
         {
           datasets.map((d: any) =>
