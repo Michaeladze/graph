@@ -4,11 +4,7 @@ import React from 'react';
 import App from './App';
 
 const Root = (props: any) => {
-  return (
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
+  return <App />;
 };
 
 export default Root;
