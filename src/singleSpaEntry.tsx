@@ -1,33 +1,36 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import singleSpaReact from 'single-spa-react';
-
 import Root from './indexSPA';
+
+const tegName = 'mainContent';
+const findTeg = (tegName = ''): Promise<boolean> => new Promise((resolve) => {
+  document.getElementById(`${ tegName }`) && resolve(true);
+  const i = setInterval(() => {
+    if (document.getElementById(`${ tegName }`)) {
+      resolve(true);
+      clearInterval(i);
+    }
+  }, 50);
+});
 
 const reactLifecycles = singleSpaReact({
   // @ts-ignore
   React,
   ReactDOM,
-  rootComponent: Root,
-  domElementGetter: () => {
-    let div = document.getElementById('container');
-    if (!div) {
-      div = document.createElement('div');
-      div.id = 'container';
-    }
-    return div;
-  },
-  errorBoundary(err, info, props) {
-    console.log('---------------');
-    console.log(err);
-    console.log(info);
-    console.log(props);
-    console.log('---------------');
-    // https://reactjs.org/docs/error-boundaries.html
-    return <div>This renders when a catastrophic error occurs</div>;
-  }
+  rootComponent: (Root as React.FC),
+  domElementGetter: () => document.getElementById(tegName) as HTMLElement
 });
 
-export const bootstrap = reactLifecycles.bootstrap;
-export const mount = reactLifecycles.mount;
-export const unmount = reactLifecycles.unmount;
+export const bootstrap = [
+  async () => {
+    await findTeg(tegName);
+    return true;
+  },
+  reactLifecycles.bootstrap,
+];
+
+export const mount = [reactLifecycles.mount];
+
+export const unmount = [reactLifecycles.unmount,];
+
